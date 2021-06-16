@@ -1,0 +1,29 @@
+Exhibitors
+    Sale#
+    Full Name
+    Tag
+    Secies
+    Animal Description
+    Check-in Weight
+    Club Name
+    Show Class Name
+    Placing
+    Buyback
+    Action
+
+Buyers
+    Bidder#
+    Name
+    Contact Name
+    Phone
+    Email
+    Logo FileName
+    Action
+
+Transactions
+    Sale#
+    Bidder#
+    Purchase Amount
+    Processor
+    Action
+
