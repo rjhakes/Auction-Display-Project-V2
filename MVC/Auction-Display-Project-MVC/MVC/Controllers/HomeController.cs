@@ -1,4 +1,4 @@
-﻿using Auction_Display_Project_MVC.Models;
+﻿using MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
