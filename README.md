@@ -83,6 +83,7 @@
 ```
 ### Run
 * cd ~/.../Auction-Display-Project-V2/Server/API
+* dotnet tool install --global dotnet-ef --version 5.0.1
 * dotnet build
 * dotnet run
 ### Tasks
