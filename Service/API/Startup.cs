@@ -42,9 +42,13 @@ namespace API
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+                    policy
+                    .AllowAnyOrigin()//.WithOrigins("http://localhost:3000"); //
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();                    
                 });
             });
+
             // services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddScoped<IBuyerRepo, BuyerRepo>();
             services.AddScoped<IBuyerBL, BuyerBL>();
