@@ -7,7 +7,7 @@ import { Header, List } from 'semantic-ui-react';
 import Home from './Components/Home';
 import AddonDisplay from './Components/AddonDisplay';
 import AddonGUI from './Components/AddonGUI';
-import DataManagement from './Components/DataManagement';
+import DataManagement from './Components/DataManagement/DataManagement';
 import LiveSaleDisplay from './Components/LiveSaleDisplay';
 import SaleScrollDisplay from './Components/SaleScrollDisplay';
 import TransactionGUI from './Components/TransactionGUI';
@@ -36,17 +36,6 @@ function App() {
         <Route path='/AddonDisplay' element={<AddonDisplay/>}/>
         <Route path='/' element={<Home/>}/>
       </Routes>
-
-        <Header as='h2' icon='users' content='Auction' />
-      <List>
-        {buyers.map((buyer: any) => (
-          <List.Item key={buyer.id}>
-            {buyer.name} 
-          </List.Item>
-          )
-        )}
-      </List>
-
     </div>
   );
 }

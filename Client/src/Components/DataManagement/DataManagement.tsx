@@ -1,8 +1,9 @@
 import React from 'react';
+import Buyer from './BuyerManager';
 
 function DataManagement() {
     return (
-        <p>DataManagement World</p>
+        <Buyer />
     );
 }
 
