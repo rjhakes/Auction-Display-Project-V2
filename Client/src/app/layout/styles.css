@@ -21,6 +21,17 @@ body {
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
+.div-data-table {
+  position: absolute;
+  width: 70%;
+}
+
+.add-form, .create-form {
+  position: fixed;
+  left:50;
+  width: 40%;
+}
+
 @media screen and (max-height: 450px) {
   .navData {padding-top: 15px}
 }

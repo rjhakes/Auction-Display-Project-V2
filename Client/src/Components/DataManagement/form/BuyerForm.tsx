@@ -34,7 +34,7 @@ export default function BuyerForm({buyer: selectedBuyer, closeForm, createOrEdit
     }
 
     return (
-        <Segment clearing>
+        <Segment className='add-form create-form' clearing>
             <Form onSubmit={handleSubmit} autoComplete='off'>
                 <Form.Input placeholder='Bidder Number' value={buyer.bidderNumber} name='bidderNumber' onChange={handleInputChange}/>
                 <Form.Input placeholder='Name' value={buyer.name} name='name' onChange={handleInputChange}/>
