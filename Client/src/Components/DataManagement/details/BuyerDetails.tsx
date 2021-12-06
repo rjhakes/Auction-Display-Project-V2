@@ -1,13 +1,14 @@
 import React from 'react'
-import { Button, Card, Icon, Image } from 'semantic-ui-react'
+import { Button, Card } from 'semantic-ui-react'
 import { BuyerModel } from '../../../Models/Buyer'
 
 interface Props {
     buyer: BuyerModel
     cancelSelectBuyer: () => void;
+    openForm: (id: string) => void;
 }
 
-export default function DMDetails({buyer, cancelSelectBuyer}: Props) {
+export default function BuyerDetails({buyer, cancelSelectBuyer, openForm}: Props) {
     return (
         <Card fluid>
             {/* <Image src={`/aassets/categoryImages/${buyer.logoFile}`} /> */}
@@ -22,10 +23,9 @@ export default function DMDetails({buyer, cancelSelectBuyer}: Props) {
             </Card.Content>
             <Card.Content extra>
                 <Button.Group widths='3'>
-                    <Button basic color='green' content='Edit'/>
+                    <Button onClick={() => openForm(buyer.id)} basic color='green' content='Edit'/>
                     <Button basic color='red' content='Delete'/>
                     <Button onClick={cancelSelectBuyer} basic color='grey' content='Close'/>
-                    
                 </Button.Group>
             </Card.Content>
         </Card>

@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Header, List } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import { BuyerModel } from '../../Models/Buyer'
+import BuyerDashboard from './dashboard/BuyerDashboard';
+import {v4 as uuid} from 'uuid';
 
 function Buyer() {
     const [buyers, setBuyers] = useState<BuyerModel[]>([]);
+    const [selectedBuyer, setSelectedBuyer] = useState<BuyerModel | undefined>(undefined);
+    const [editMode, setEditMode] = useState(false);
+
+
 
     useEffect(() => {
         axios.get<BuyerModel[]>('http://localhost:5000/api/Buyer').then(response => {
@@ -13,10 +19,51 @@ function Buyer() {
         })
     }, [])
 
+    function handleSelectBuyer(id: string) {
+        setSelectedBuyer(buyers.find(x => x.id === id));
+    }
+
+    function handleCancelSelectBuyer() {
+        setSelectedBuyer(undefined);
+    }
+
+    function handleFormOpen(id?: string){
+        id ? handleSelectBuyer(id) : handleCancelSelectBuyer();
+        setEditMode(true);
+    }
+
+    function handleFormClose() {
+        setEditMode(false);
+    }
+
+    function handleCreateOrEditBuyer(buyer: BuyerModel) {
+        buyer.id 
+            ? setBuyers([...buyers.filter(x => x.id !== buyer.id), buyer])
+            : setBuyers([...buyers, {...buyer, id: uuid()}]);
+        setEditMode(false);
+        setSelectedBuyer(buyer);
+    }
+
+    function handleDeleteBuyer(id: string) {
+        setBuyers([...buyers.filter(x => x.id !== id)])
+    }
+
+
     return (
-    <div>
+    <>
         <Header as='h2' icon='users' content='Buyers' />
-        <table>
+        <BuyerDashboard
+            buyers={buyers}
+            selectedBuyer={selectedBuyer}
+            selectBuyer={handleSelectBuyer}
+            cancelSelectBuyer={handleCancelSelectBuyer}
+            editMode={editMode}
+            openForm={handleFormOpen}
+            closeForm={handleFormClose}
+            createOrEdit={handleCreateOrEditBuyer}
+            deleteBuyer={handleDeleteBuyer}
+        />
+        {/* <table>
             <thead>
                 <tr>
                     <th>Bidder Number</th>
@@ -41,8 +88,8 @@ function Buyer() {
                     </tr>
                 ))}
             </tbody>
-        </table>
-    </div>
+        </table> */}
+    </>
     );
 }
 

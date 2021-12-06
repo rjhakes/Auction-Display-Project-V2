@@ -1,4 +1,3 @@
-import DropdownMenu from '@restart/ui/esm/DropdownMenu';
 import React from 'react';
 import { Container, Menu } from 'semantic-ui-react';
 

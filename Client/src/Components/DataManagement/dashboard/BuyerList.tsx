@@ -7,10 +7,11 @@ interface Props {
     // selectedBuyer: BuyerModel | undefined;
     selectBuyer: (id: string) => void;
     // cancelSelectBuyer: () => void;
+    deleteBuyer: (id: string) => void;
 }
 
-// export default function DMList({buyers, selectedBuyer, selectBuyer, cancelSelectBuyer}: Props) {
-export default function DMList({buyers, selectBuyer}: Props) {
+// export default function BuyerList({buyers, selectedBuyer, selectBuyer, cancelSelectBuyer}: Props) {
+export default function BuyerList({buyers, selectBuyer, deleteBuyer}: Props) {
     return (
         <Segment>
             <Item.Group divided>
@@ -29,6 +30,7 @@ export default function DMList({buyers, selectBuyer}: Props) {
                             </Item.Description>
                             <Item.Extra>
                                 <Button onClick={() => selectBuyer(buyer.id)} floated="right" content='View' color='green'/>
+                                <Button onClick={() => deleteBuyer(buyer.id)} floated="right" content='Delete' color='red'/>
                             </Item.Extra>
                         </Item.Content>
                     </Item>
