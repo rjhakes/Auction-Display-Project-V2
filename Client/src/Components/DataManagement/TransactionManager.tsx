@@ -1,44 +1,69 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Header, List } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import { TransactionModel } from '../../Models/Transaction'
+import TransactionDashboard from './dashboard/TransactionDashboard';
+import {v4 as uuid} from 'uuid';
 
 function Transaction() {
     const [transactions, setTransactions] = useState<TransactionModel[]>([]);
+    const [selectedTransaction, setSelectedTransaction] = useState<TransactionModel | undefined>(undefined);
+    const [editMode, setEditMode] = useState(false);
+
+
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/Transaction').then(response => {
+        axios.get<TransactionModel[]>('http://localhost:5000/api/Transaction').then(response => {
         console.log(response);
         setTransactions(response.data);
         })
     }, [])
 
+    function handleSelectTransaction(id: string) {
+        setSelectedTransaction(transactions.find(x => x.id === id));
+    }
+
+    function handleCancelSelectTransaction() {
+        setSelectedTransaction(undefined);
+    }
+
+    function handleFormOpen(id?: string){
+        id ? handleSelectTransaction(id) : handleCancelSelectTransaction();
+        setEditMode(true);
+    }
+
+    function handleFormClose() {
+        setEditMode(false);
+    }
+
+    function handleCreateOrEditTransaction(transaction: TransactionModel) {
+        transaction.id 
+            ? setTransactions([...transactions.filter(x => x.id !== transaction.id), transaction])
+            : setTransactions([...transactions, {...transaction, id: uuid()}]);
+        setEditMode(false);
+        setSelectedTransaction(transaction);
+    }
+
+    function handleDeleteTransaction(id: string) {
+        setTransactions([...transactions.filter(x => x.id !== id)])
+    }
+
+
     return (
-    <div>
-        <Header as='h2' icon='spinner' content='Transactions' />
-        <table>
-            <thead>
-                <tr>
-                    <th>Sale Number</th>
-                    <th>Bidder Number</th>
-                    <th>Purchase Amount</th>
-                    <th>Processor</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {transactions.map((transaction: any) => (
-                    <tr key={transaction.id}>
-                        <td>{transaction.saleNumber}</td>
-                        <td>{transaction.bidderNumber}</td>
-                        <td>{transaction.purchaseAmount}</td>
-                        <td>{transaction.processor}</td>
-                        <td>{transaction.action}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    </div>
+    <>
+        <Header as='h2' icon='users' content='Transactions' />
+        <TransactionDashboard
+            transactions={transactions}
+            selectedTransaction={selectedTransaction}
+            selectTransaction={handleSelectTransaction}
+            cancelSelectTransaction={handleCancelSelectTransaction}
+            editMode={editMode}
+            openForm={handleFormOpen}
+            closeForm={handleFormClose}
+            createOrEdit={handleCreateOrEditTransaction}
+            deleteTransaction={handleDeleteTransaction}
+        />
+    </>
     );
 }
 
