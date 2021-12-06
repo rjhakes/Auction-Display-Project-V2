@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Header } from 'semantic-ui-react';
 import { BuyerModel } from '../../Models/Buyer'
 import BuyerDashboard from './dashboard/BuyerDashboard';
 import {v4 as uuid} from 'uuid';
+import agent from '../../app/api/agent';
 
 function Buyer() {
     const [buyers, setBuyers] = useState<BuyerModel[]>([]);
@@ -13,9 +13,12 @@ function Buyer() {
 
 
     useEffect(() => {
-        axios.get<BuyerModel[]>('http://localhost:5000/api/Buyer').then(response => {
-        console.log(response);
-        setBuyers(response.data);
+        // axios.get<BuyerModel[]>('http://localhost:5000/api/Buyer').then(response => {
+        // console.log(response);
+        // setBuyers(response.data);
+        // })
+        agent.Buyers.list().then(response => {
+            setBuyers(response);
         })
     }, [])
 
@@ -50,8 +53,8 @@ function Buyer() {
 
 
     return (
-    <>
-        <Header as='h2' icon='users' content='Buyers' />
+    <div className='data-manager'>
+        <Header className='header-data' as='h2' icon='users' content='Buyers'  />
         <BuyerDashboard
             buyers={buyers}
             selectedBuyer={selectedBuyer}
@@ -63,34 +66,35 @@ function Buyer() {
             createOrEdit={handleCreateOrEditBuyer}
             deleteBuyer={handleDeleteBuyer}
         />
-        {/* <table>
-            <thead>
-                <tr>
-                    <th>Bidder Number</th>
-                    <th>Name</th>
-                    <th>Contact Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Logo File</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {buyers.map(buyer => (
-                    <tr key={buyer.id}>
-                        <td>{buyer.bidderNumber}</td>
-                        <td>{buyer.name}</td>
-                        <td>{buyer.contactName}</td>
-                        <td>{buyer.phone}</td>
-                        <td>{buyer.email}</td>
-                        <td>{buyer.logoFile}</td>
-                        <td>{buyer.action}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table> */}
-    </>
+    </div>
     );
 }
-
 export default Buyer;
+        // {/* <table>
+        //     <thead>
+        //         <tr>
+        //             <th>Bidder Number</th>
+        //             <th>Name</th>
+        //             <th>Contact Name</th>
+        //             <th>Phone</th>
+        //             <th>Email</th>
+        //             <th>Logo File</th>
+        //             <th>Action</th>
+        //         </tr>
+        //     </thead>
+        //     <tbody>
+        //         {buyers.map(buyer => (
+        //             <tr key={buyer.id}>
+        //                 <td>{buyer.bidderNumber}</td>
+        //                 <td>{buyer.name}</td>
+        //                 <td>{buyer.contactName}</td>
+        //                 <td>{buyer.phone}</td>
+        //                 <td>{buyer.email}</td>
+        //                 <td>{buyer.logoFile}</td>
+        //                 <td>{buyer.action}</td>
+        //             </tr>
+        //         ))}
+        //     </tbody>
+        // </table> */}
+    
+

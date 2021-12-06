@@ -21,13 +21,10 @@ function App() {
   return (
     <>
       <NavBar/>
-      <Container style={{marginTop: '7em'}}>
-        {/* <Buyer/>
-        <Exhibitor/>
+      <Container className='app-container'>
+        <Buyer/>
+        {/* <Exhibitor/>
         <Transaction/> */}
-        
-        
-        
       </Container>
       {/* <Container style={{marginTop:'7em'}}>
         <Navigation/>

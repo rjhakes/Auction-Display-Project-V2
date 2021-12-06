@@ -1,9 +1,15 @@
 body {
   background-color: #EAEAEA !important;
+  height: 200%;
+}
+
+.app-container {
+  
 }
 
 .ui.inverted.top.fixed.menu {
   background-image: linear-gradient(135deg, rgb(24,115,42) 0%, rgb(33, 174, 138) 69%, rgb(32, 172, 167) 89%) !important;
+  z-index: 100;
 }
 
 .navData {
@@ -21,16 +27,43 @@ body {
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
+.data-manager {
+  position: fixed;
+  top: 5%;
+  height: 90%;
+  padding-top: 2em;
+}
+.header-data {
+  top: 7%;
+  left: 30%;
+}
+
+.container-data-buttons {
+  top: 15%;
+  left: 30%;
+}
+
 .div-data-table {
-  position: absolute;
-  width: 70%;
+  height: 90%;
+  overflow-y: auto;
+}
+
+.data-table-header {
+  position: sticky;
+}
+
+.data-table-body {
+  height: 10px;
 }
 
 .add-form, .create-form {
   position: fixed;
-  left:50;
-  width: 40%;
+  top: 6em;
+  width: 50%;
+  z-index: 10;
 }
+
+
 
 @media screen and (max-height: 450px) {
   .navData {padding-top: 15px}
