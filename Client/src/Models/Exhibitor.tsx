@@ -1,6 +1,4 @@
-import internal from "stream";
-
-export interface Exhibitor
+export interface ExhibitorModel
 {
     id: string,
     saleNumber: number,

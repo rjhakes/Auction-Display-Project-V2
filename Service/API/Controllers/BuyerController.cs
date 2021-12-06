@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BL;
 using Models;
-using DL;
 
 namespace API.Controllers
 {
@@ -15,9 +14,9 @@ namespace API.Controllers
     public class BuyerController : ControllerBase
     {
         private readonly IBuyerBL _buyerBL;
-        private readonly DataContext _context;
+        // private readonly DataContext _context;
         // private readonly IMediator _mediator;
-        private readonly ILogger<BuyerController> _logger;
+        // private readonly ILogger<BuyerController> _logger;
         
         public BuyerController(IBuyerBL buyerBL) //IMediator mediator)
         {
@@ -25,10 +24,10 @@ namespace API.Controllers
             // _mediator = mediator;
         }
 
-        public BuyerController(DataContext context)
-        {
-            _context = context;
-        }
+        // public BuyerController(DataContext context)
+        // {
+        //     _context = context;
+        // }
         // public BuyerController(ILogger<BuyerController> logger)
         // {
         //     _logger = logger;

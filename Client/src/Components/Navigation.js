@@ -10,7 +10,7 @@ const Navigation = () => {
                         <Nav>
                             <Nav.Link href="/">Home</Nav.Link>
                             <Nav.Link href="/DataManagement">Data Management</Nav.Link>
-                            <Nav.Link href="/TransactionGUI">HoTransaction GUIme</Nav.Link>
+                            <Nav.Link href="/TransactionGUI">Transaction GUI</Nav.Link>
                             <Nav.Link href="/LiveSaleDisplay">Live Sale Display</Nav.Link>
                             <Nav.Link href="/SaleScrollDisplay">Sale Scroll Display</Nav.Link>
                             <Nav.Link href="/AddonGUI">Addon GUI</Nav.Link>

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Header, List } from 'semantic-ui-react';
+import { BuyerModel } from '../../Models/Buyer'
 
 function Buyer() {
-    const [buyers, setBuyers] = useState([]);
+    const [buyers, setBuyers] = useState<BuyerModel[]>([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/Buyer').then(response => {
+        axios.get<BuyerModel[]>('http://localhost:5000/api/Buyer').then(response => {
         console.log(response);
         setBuyers(response.data);
         })
@@ -28,7 +29,7 @@ function Buyer() {
                 </tr>
             </thead>
             <tbody>
-                {buyers.map((buyer: any) => (
+                {buyers.map(buyer => (
                     <tr key={buyer.id}>
                         <td>{buyer.bidderNumber}</td>
                         <td>{buyer.name}</td>

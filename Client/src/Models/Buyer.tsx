@@ -1,4 +1,4 @@
-export interface Buyer
+export interface BuyerModel
 {
     id: string,
     bidderNumber: number,
