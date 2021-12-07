@@ -6,9 +6,10 @@ interface Props {
     buyer: BuyerModel | undefined;
     closeForm: () => void;
     createOrEdit: (buyer: BuyerModel) => void;
+    submitting: boolean;
 }
 
-export default function BuyerForm({buyer: selectedBuyer, closeForm, createOrEdit}: Props) {
+export default function BuyerForm({buyer: selectedBuyer, closeForm, createOrEdit, submitting}: Props) {
     const initialState = selectedBuyer ?? {
         id: '',
         bidderNumber: '',
@@ -64,7 +65,7 @@ export default function BuyerForm({buyer: selectedBuyer, closeForm, createOrEdit
                 />
                 <Form.Input label='Logo File' placeholder='Logo File' value={buyer.logoFile} name='logoFile' onChange={handleInputChange}/>
                 <Form.Input label='Action' placeholder='Action' value={buyer.action} name='action' onChange={handleInputChange}/>
-                <Button onClick={handleSubmit} floated='right' positive type='submit' content='Submit' />
+                <Button onClick={handleSubmit} loading={submitting} floated='right' positive type='submit' content='Submit' />
                 <Button onClick={closeForm} floated='right' type='button' content='Cancel' />
             </Form>
         </Segment>

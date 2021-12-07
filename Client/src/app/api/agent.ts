@@ -1,7 +1,23 @@
 import axios, { AxiosResponse } from 'axios';
 import { BuyerModel } from '../../Models/Buyer';
 
+const sleep = (delay: number) => {
+    return new Promise ((resolve) => {
+        setTimeout(resolve, delay)
+    })
+}
+
 axios.defaults.baseURL ='http://localhost:5000/api';
+
+axios.interceptors.response.use(async response => {
+    try {
+        await sleep(1000);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return await Promise.reject(error);
+    }
+})
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data
 
@@ -13,7 +29,11 @@ const requests = {
 }
 
 const Buyers = {
-    list: () => requests.get<BuyerModel[]>('/Buyer')
+    list: () => requests.get<BuyerModel[]>('/Buyer'),
+    details: (id: string) => requests.get<BuyerModel>(`/Buyer/${id}`),
+    create: (buyer: BuyerModel) => axios.post<void>('/Buyer', buyer),
+    update: (buyer: BuyerModel) => axios.put<void>(`/Buyer/${buyer.id}`, buyer),
+    delete: (id: string) => axios.delete<void>(`/Buyer/${id}`)
 }
 
 const agent = {

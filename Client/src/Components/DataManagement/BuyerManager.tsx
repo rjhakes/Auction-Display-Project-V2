@@ -4,11 +4,14 @@ import { BuyerModel } from '../../Models/Buyer'
 import BuyerDashboard from './dashboard/BuyerDashboard';
 import {v4 as uuid} from 'uuid';
 import agent from '../../app/api/agent';
+import LoadingComponent from '../../app/layout/LoadingComponent';
 
 function Buyer() {
     const [buyers, setBuyers] = useState<BuyerModel[]>([]);
     const [selectedBuyer, setSelectedBuyer] = useState<BuyerModel | undefined>(undefined);
     const [editMode, setEditMode] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
 
 
 
@@ -19,6 +22,7 @@ function Buyer() {
         // })
         agent.Buyers.list().then(response => {
             setBuyers(response);
+            setLoading(false);
         })
     }, [])
 
@@ -40,17 +44,36 @@ function Buyer() {
     }
 
     function handleCreateOrEditBuyer(buyer: BuyerModel) {
-        buyer.id 
-            ? setBuyers([...buyers.filter(x => x.id !== buyer.id), buyer])
-            : setBuyers([...buyers, {...buyer, id: uuid()}]);
-        setEditMode(false);
-        setSelectedBuyer(buyer);
+        setSubmitting(true);
+        if (buyer.id) {
+            agent.Buyers.update(buyer).then(() => {
+                setBuyers([...buyers.filter(x => x.id !== buyer.id), buyer])
+                setSelectedBuyer(buyer);
+                setEditMode(false);
+                setSubmitting(false);
+            })
+        } else {
+            buyer.id = uuid();
+            agent.Buyers.create(buyer).then(() => {
+                setBuyers([...buyers, buyer])
+                setSelectedBuyer(buyer);
+                setEditMode(false);
+                setSubmitting(false);
+            })
+        }
     }
 
     function handleDeleteBuyer(id: string) {
-        setBuyers([...buyers.filter(x => x.id !== id)])
+        setSubmitting(true);
+        agent.Buyers.delete(id).then(() => {
+            setBuyers([...buyers.filter(x => x.id !== id)]);
+            setSubmitting(false);
+        })
+        
     }
 
+
+    if (loading) return <LoadingComponent content='Loaading app' />
 
     return (
     <div className='data-manager'>
@@ -65,6 +88,7 @@ function Buyer() {
             closeForm={handleFormClose}
             createOrEdit={handleCreateOrEditBuyer}
             deleteBuyer={handleDeleteBuyer}
+            submitting={submitting}
         />
     </div>
     );
