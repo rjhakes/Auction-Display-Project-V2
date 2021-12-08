@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { BuyerModel } from '../Models/Buyer';
-import { ExhibitorModel } from '../Models/Exhibitor';
-import { TransactionModel } from '../Models/Transaction';
+import { BuyerModel } from '../models/Buyer';
+import { ExhibitorModel } from '../models/Exhibitor';
+import { TransactionModel } from '../models/Transaction';
 
 const sleep = (delay: number) => {
     return new Promise ((resolve) => {

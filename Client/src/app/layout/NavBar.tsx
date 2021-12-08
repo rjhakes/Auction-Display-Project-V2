@@ -10,7 +10,7 @@ export default function NavBar() {
                     <img src="/assets/4h_Logo.png" alt="logo" style={{marginRight: '10px'}}/>
                     Auction
                 </Menu.Item>
-                <Menu.Item as={NavLink} to='/dataManagement/buyers' name='Data Management' />
+                <Menu.Item as={NavLink} to='/dataManagement' name='Data Management' />
                 <Menu.Item as={NavLink} to='/transactionGUI' name='Transaction GUI' />
                 <Menu.Item as={NavLink} to='/liveSaleDisplay' name='Live Sale Display' />
                 <Menu.Item as={NavLink} to='/saleScrollDisplay' name='Sale Scroll Display' />

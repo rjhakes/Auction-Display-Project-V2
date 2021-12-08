@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
@@ -48,13 +47,14 @@ export default observer( function BuyerList() {
                                 <TableCell width={1} textAlign='center'>{buyer.action}</TableCell>
                                 <TableCell width={2} textAlign='center'>
                                     <Button onClick={() => openForm(buyer.id)} basic color='green' content='Edit' />
-                                    {/* <Button as={Link} to={`/dataManagement/buyers/${buyer.id}`} basic color='green' content='Edit' /> */}
                                     <Button 
                                         name={buyer.id}
-                                        onClick={(e) => handleBuyerDelete(e, buyer.id)} 
-                                        loading={loading && target === buyer.id} 
-                                        basic color='red' 
-                                        content='Delete' />    
+                                        onClick={(e) => { 
+                                        if (window
+                                            .confirm(`Are you sure you want to DELETE buyer:\n\nBidder #:     ${buyer.bidderNumber}`)) 
+                                            handleBuyerDelete(e, buyer.id)
+                                        }} 
+                                        loading={loading && target === buyer.id} basic color='red' content='Delete' />
                                 </TableCell>
                             </TableRow>
                         ))}

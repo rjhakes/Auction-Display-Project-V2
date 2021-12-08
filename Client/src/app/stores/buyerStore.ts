@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { BuyerModel } from "../Models/Buyer";
+import { BuyerModel } from "../models/Buyer";
 import {v4 as uuid} from 'uuid';
 
 export default class BuyerStore {
@@ -126,6 +126,20 @@ export default class BuyerStore {
                 // if (this.selectedBuyer?.id === id) this.cancelSelectedBuyer();
                 this.loading = false;
             })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    deleteAllBuyers = async () => {
+        this.loading = true;
+        try {
+            this.buyerRegistry.forEach(async buyer => {
+                this.deleteBuyer(buyer.id);
+            });
         } catch (error) {
             console.log(error);
             runInAction(() => {

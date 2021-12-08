@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
@@ -44,13 +43,14 @@ export default observer( function TransactionList() {
                                 <TableCell width={1} textAlign='center'>{transaction.action}</TableCell>
                                 <TableCell width={2} textAlign='center'>
                                     <Button onClick={() => openForm(transaction.id)} basic color='green' content='Edit' />
-                                    {/* <Button as={Link} to={`/dataManagement/transactions/${transaction.id}`} basic color='green' content='Edit' /> */}
                                     <Button 
                                         name={transaction.id}
-                                        onClick={(e) => handleTransactionDelete(e, transaction.id)} 
-                                        loading={loading && target === transaction.id} 
-                                        basic color='red' 
-                                        content='Delete' />    
+                                        onClick={(e) => { 
+                                        if (window
+                                            .confirm(`Are you sure you want to DELETE transaction:\n\nSale #:       ${transaction.saleNumber}\nBidder #:     ${transaction.bidderNumber}`)) 
+                                            handleTransactionDelete(e, transaction.id)
+                                        }} 
+                                        loading={loading && target === transaction.id} basic color='red' content='Delete' />
                                 </TableCell>
                             </TableRow>
                         ))}

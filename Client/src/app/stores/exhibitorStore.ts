@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { ExhibitorModel } from "../Models/Exhibitor";
+import { ExhibitorModel } from "../models/Exhibitor";
 import {v4 as uuid} from 'uuid';
 
 export default class ExhibitorStore {
@@ -126,6 +126,20 @@ export default class ExhibitorStore {
                 // if (this.selectedExhibitor?.id === id) this.cancelSelectedExhibitor();
                 this.loading = false;
             })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    deleteAllExhibitors = async () => {
+        this.loading = true;
+        try {
+            this.exhibitorRegistry.forEach(async exhibitor => {
+                this.deleteExhibitor(exhibitor.id);
+            });
         } catch (error) {
             console.log(error);
             runInAction(() => {

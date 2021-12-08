@@ -9,7 +9,7 @@ import BuyerList from './BuyerList';
 export default observer( function BuyerDashboard() {
 
     const {buyerStore} = useStore();
-    const {editMode, openForm} = buyerStore;
+    const {editMode, openForm, deleteAllBuyers, loading} = buyerStore;
 
     useEffect(() => {
         buyerStore.loadBuyers();
@@ -21,9 +21,14 @@ export default observer( function BuyerDashboard() {
         <>
             <Container className='container-data-buttons' fixed='top' style={{marginBottom: '1em'}}>
                 <Button onClick={() => openForm()} positive content='Add Buyer'/>
-                <Button positive content='Delete All Buyers'/>
-                <Button floated='right' positive content='Export Buyers'/>
-                <Button floated='right' positive content='Import Buyers'/>
+                <Button 
+                    onClick={() => { 
+                    if (window.confirm('Are you sure you want to DELETE ALL BUYERS?')) 
+                    deleteAllBuyers()
+                    }} 
+                    loading={loading} negative content='Delete All Buyers'/>
+                <Button floated='right' color='blue' content='Export Buyers'/>
+                <Button floated='right' color='blue' content='Import Buyers'/>
             </Container>
             <Container className='add-form create-form'>
                 {editMode &&

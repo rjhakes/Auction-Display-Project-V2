@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Card } from 'semantic-ui-react'
-import { BuyerModel } from '../../../app/Models/Buyer'
+import { BuyerModel } from '../../../app/models/Buyer'
 
 interface Props {
     buyer: BuyerModel

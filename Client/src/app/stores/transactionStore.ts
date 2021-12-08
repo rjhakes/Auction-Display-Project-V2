@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { TransactionModel } from "../Models/Transaction";
+import { TransactionModel } from "../models/Transaction";
 import {v4 as uuid} from 'uuid';
 
 export default class TransactionStore {
@@ -126,6 +126,20 @@ export default class TransactionStore {
                 // if (this.selectedTransaction?.id === id) this.cancelSelectedTransaction();
                 this.loading = false;
             })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    deleteAllTransactions = async () => {
+        this.loading = true;
+        try {
+            this.transactionRegistry.forEach(async transaction => {
+                this.deleteTransaction(transaction.id);
+            });
         } catch (error) {
             console.log(error);
             runInAction(() => {

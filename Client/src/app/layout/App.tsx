@@ -3,16 +3,16 @@ import { Container } from 'semantic-ui-react';
 import { Route, Routes } from 'react-router-dom';
 import './styles.css';
 import NavBar from './NavBar';
-import HomePage from '../../Components/Home/HomePage';
-import BuyerManager from '../../Components/DataManagement/BuyerManager';
-import DataManagement from '../../Components/DataManagement/DataManagement';
-import ExhibitorManager from '../../Components/DataManagement/ExhibitorManager';
-import TransactionManager from '../../Components/DataManagement/TransactionManager';
-import TransactionGUI from '../../Components/TransactionGUI/TransactionGUI';
-import LiveSaleDisplay from '../../Components/LiveSaleDisplay/LiveSaleDisplay';
-import SaleScrollDisplay from '../../Components/SaleScrollDisplay/SaleScrollDisplay';
-import AddonGUI from '../../Components/AddonGUI/AddonGUI';
-import AddonDisplay from '../../Components/AddonDisplay/AddonDisplay';
+import HomePage from '../../components/home/HomePage';
+import BuyerManager from '../../components/dataManagement/BuyerManager';
+import DataManagement from '../../components/dataManagement/DataManagement';
+import ExhibitorManager from '../../components/dataManagement/ExhibitorManager';
+import TransactionManager from '../../components/dataManagement/TransactionManager';
+import TransactionGUI from '../../components/transactionGUI/TransactionGUI';
+import LiveSaleDisplay from '../../components/liveSaleDisplay/LiveSaleDisplay';
+import SaleScrollDisplay from '../../components/saleScrollDisplay/SaleScrollDisplay';
+import AddonGUI from '../../components/addonGUI/AddonGUI';
+import AddonDisplay from '../../components/addonDisplay/AddonDisplay';
 
 function App() {
   return (

@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
@@ -55,13 +54,14 @@ export default observer( function ExhibitorList() {
                                 <TableCell width={1} textAlign='center'>{exhibitor.action}</TableCell>
                                 <TableCell width={2} textAlign='center'>
                                     <Button onClick={() => openForm(exhibitor.id)} basic color='green' content='Edit' />
-                                    {/* <Button as={Link} to={`/dataManagement/exhibitors/${exhibitor.id}`} basic color='green' content='Edit' /> */}
                                     <Button 
                                         name={exhibitor.id}
-                                        onClick={(e) => handleExhibitorDelete(e, exhibitor.id)} 
-                                        loading={loading && target === exhibitor.id} 
-                                        basic color='red' 
-                                        content='Delete' />    
+                                        onClick={(e) => { 
+                                        if (window
+                                            .confirm(`Are you sure you want to DELETE exhibitor:\n\nSale #:       ${exhibitor.saleNumber}\n`)) 
+                                            handleExhibitorDelete(e, exhibitor.id)
+                                        }} 
+                                        loading={loading && target === exhibitor.id} basic color='red' content='Delete' />   
                                 </TableCell>
                             </TableRow>
                         ))}
