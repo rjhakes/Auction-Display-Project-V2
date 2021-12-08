@@ -13,7 +13,6 @@ import LiveSaleDisplay from '../../Components/LiveSaleDisplay/LiveSaleDisplay';
 import SaleScrollDisplay from '../../Components/SaleScrollDisplay/SaleScrollDisplay';
 import AddonGUI from '../../Components/AddonGUI/AddonGUI';
 import AddonDisplay from '../../Components/AddonDisplay/AddonDisplay';
-import BuyerForm from '../../Components/DataManagement/form/BuyerForm';
 
 function App() {
   return (
@@ -31,8 +30,6 @@ function App() {
           <Route path='/saleScrollDisplay' element={<SaleScrollDisplay />}/>
           <Route path='/addonGUI' element={<AddonGUI />}/>
           <Route path='/addonDisplay' element={<AddonDisplay />}/>
-
-          {/* <Route path='/dataManagement/buyers/:id' element={<BuyerForm />} /> */}
         </Routes>
       </Container>
     </>
