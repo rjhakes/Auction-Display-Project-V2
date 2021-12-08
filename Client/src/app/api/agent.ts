@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { BuyerModel } from '../../Models/Buyer';
+import { BuyerModel } from '../Models/Buyer';
 
 const sleep = (delay: number) => {
     return new Promise ((resolve) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Header } from 'semantic-ui-react';
-import { ExhibitorModel } from '../../Models/Exhibitor'
+import { ExhibitorModel } from '../../app/Models/Exhibitor'
 import ExhibitorDashboard from './dashboard/ExhibitorDashboard';
 import {v4 as uuid} from 'uuid';
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Header } from 'semantic-ui-react';
-import { TransactionModel } from '../../Models/Transaction'
+import { TransactionModel } from '../../app/Models/Transaction'
 import TransactionDashboard from './dashboard/TransactionDashboard';
 import {v4 as uuid} from 'uuid';
 

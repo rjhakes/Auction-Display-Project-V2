@@ -1,28 +1,13 @@
+import { observer } from 'mobx-react-lite';
 import React, { SyntheticEvent, useState } from 'react';
-import { Button, Container, Label, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from 'semantic-ui-react';
-// import axios from 'axios';
-import { BuyerModel } from '../../../Models/Buyer'
-// import BuyerList from './BuyerList';
-// import BuyerDetails from '../details/BuyerDetails';
+import { Button, Container, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from 'semantic-ui-react';
+import { useStore } from '../../../app/stores/store';
 import BuyerForm from '../form/BuyerForm';
 
+export default observer( function BuyerDashboard() {
 
-interface Props {
-    buyers: BuyerModel[];
-    selectedBuyer: BuyerModel | undefined;
-    selectBuyer: (id: string) => void;
-    cancelSelectBuyer: () => void;
-    editMode: boolean;
-    openForm: (id?: string) => void;
-    closeForm: () => void;
-    createOrEdit: (buyer: BuyerModel) => void;
-    deleteBuyer: (id: string) => void;
-    submitting: boolean;
-}
-
-export default function BuyerDashboard({buyers, selectedBuyer, 
-    selectBuyer, cancelSelectBuyer, editMode, 
-    openForm, closeForm, createOrEdit, deleteBuyer, submitting}: Props) {
+    const {buyerStore} = useStore();
+    const {buyersByBidNum, editMode, openForm, deleteBuyer, loading} = buyerStore;
 
     const [target, setTarget] = useState('');
 
@@ -41,18 +26,13 @@ export default function BuyerDashboard({buyers, selectedBuyer,
             </Container>
             <Container className='add-form create-form'>
                 {editMode &&
-                <BuyerForm 
-                    closeForm={closeForm}
-                    buyer={selectedBuyer}
-                    createOrEdit={createOrEdit}
-                    submitting={submitting}
-                />}
+                <BuyerForm />}
             </Container>
             <div className='div-data-table-header'>
                 <Table inverted fixed stackable className='data-table-header'>
                     <TableHeader  className='table-body'>
                         <TableRow className=''> 
-                            <TableHeaderCell with={1} textAlign='center'>Bidder Number</TableHeaderCell>
+                            <TableHeaderCell with={1} textAlign='center'>Bidder #</TableHeaderCell>
                             <TableHeaderCell with={1} textAlign='center'>Name</TableHeaderCell>
                             <TableHeaderCell with={1} textAlign='center'>Contact Name</TableHeaderCell>
                             <TableHeaderCell with={1} textAlign='center'>Phone</TableHeaderCell>
@@ -66,7 +46,7 @@ export default function BuyerDashboard({buyers, selectedBuyer,
             <div className='div-data-table-body'>
                 <Table inverted fixed striped stackable className='data-table-body'>
                     <TableBody className='table-body'>
-                        {buyers.map(buyer => (
+                        {buyersByBidNum.map(buyer => (
                             <TableRow key={buyer.id}>
                                 <TableCell width={1} textAlign='center'>{buyer.bidderNumber}</TableCell>
                                 <TableCell width={1} textAlign='center'>{buyer.name}</TableCell>
@@ -80,7 +60,7 @@ export default function BuyerDashboard({buyers, selectedBuyer,
                                     <Button 
                                         name={buyer.id}
                                         onClick={(e) => handleBuyerDelete(e, buyer.id)} 
-                                        loading={submitting && target === buyer.id} 
+                                        loading={loading && target === buyer.id} 
                                         basic color='red' 
                                         content='Delete' />    
                                 </TableCell>
@@ -89,33 +69,6 @@ export default function BuyerDashboard({buyers, selectedBuyer,
                     </TableBody>
                 </Table>
             </div>
-                    
-                {/* </div> */}
         </>
     )
-}
-
-
-// {/* <Grid>
-//                 <Grid.Column width='10'>
-//                     <BuyerList 
-//                         buyers={buyers}
-//                         selectBuyer={selectBuyer}
-//                         deleteBuyer={deleteBuyer}
-//                     />
-//                 </Grid.Column>
-//                 <Grid.Column width='6'>
-//                     {selectedBuyer && !editMode &&
-//                     <BuyerDetails 
-//                         buyer={selectedBuyer} 
-//                         cancelSelectBuyer={cancelSelectBuyer} 
-//                         openForm={openForm}
-//                     />}
-//                     {editMode &&
-//                     <BuyerForm 
-//                         closeForm={closeForm}
-//                         buyer={selectedBuyer}
-//                         createOrEdit={createOrEdit}
-//                     />}
-//                 </Grid.Column>
-//             </Grid> */}
+})

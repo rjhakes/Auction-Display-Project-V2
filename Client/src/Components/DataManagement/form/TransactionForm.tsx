@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Button, Form, Segment } from 'semantic-ui-react'
-import { TransactionModel } from '../../../Models/Transaction'
+import { TransactionModel } from '../../../app/Models/Transaction'
 
 interface Props {
     transaction: TransactionModel | undefined;

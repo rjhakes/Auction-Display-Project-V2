@@ -14,8 +14,8 @@ import './styles.css';
 import NavBar from './NavBar';
 import { Container } from 'semantic-ui-react';
 import Buyer from '../../Components/DataManagement/BuyerManager';
-import Transaction from '../../Components/DataManagement/TransactionManager';
-import Exhibitor from '../../Components/DataManagement/ExhibitorManager';
+// import Transaction from '../../Components/DataManagement/TransactionManager';
+// import Exhibitor from '../../Components/DataManagement/ExhibitorManager';
 
 function App() {
   return (

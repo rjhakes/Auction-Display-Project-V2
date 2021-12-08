@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Button, Form, Segment } from 'semantic-ui-react'
-import { ExhibitorModel } from '../../../Models/Exhibitor'
+import { ExhibitorModel } from '../../../app/Models/Exhibitor'
 
 interface Props {
     exhibitor: ExhibitorModel | undefined;

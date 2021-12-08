@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Label, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from 'semantic-ui-react';
 // import axios from 'axios';
-import { ExhibitorModel } from '../../../Models/Exhibitor'
+import { ExhibitorModel } from '../../../app/Models/Exhibitor'
 // import ExhibitorList from './ExhibitorList';
 // import ExhibitorDetails from '../details/ExhibitorDetails';
 import ExhibitorForm from '../form/ExhibitorForm';
@@ -30,7 +30,7 @@ export default function ExhibitorDashboard({exhibitors, selectedExhibitor,
                         <Table className='data-table'>
                             <TableHeader>
                                 <TableRow> 
-                                    <TableHeaderCell>Sale Number</TableHeaderCell>
+                                    <TableHeaderCell>Sale #</TableHeaderCell>
                                     <TableHeaderCell>Name</TableHeaderCell>
                                     <TableHeaderCell>Tag</TableHeaderCell>
                                     <TableHeaderCell>Species</TableHeaderCell>

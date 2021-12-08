@@ -1,6 +1,6 @@
 import React from 'react';
 import { Item, Segment, Button, Label } from 'semantic-ui-react';
-import { BuyerModel } from '../../../Models/Buyer';
+import { BuyerModel } from '../../../app/Models/Buyer';
 
 interface Props {
     buyers: BuyerModel[];

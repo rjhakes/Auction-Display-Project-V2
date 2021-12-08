@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Label, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from 'semantic-ui-react';
 // import axios from 'axios';
-import { TransactionModel } from '../../../Models/Transaction'
+import { TransactionModel } from '../../../app/Models/Transaction'
 // import TransactionList from './TransactionList';
 // import TransactionDetails from '../details/TransactionDetails';
 import TransactionForm from '../form/TransactionForm';
@@ -30,8 +30,8 @@ export default function TransactionDashboard({transactions, selectedTransaction,
                         <Table className='data-table'>
                             <TableHeader>
                                 <TableRow> 
-                                    <TableHeaderCell>Sale Number</TableHeaderCell>
-                                    <TableHeaderCell>Bidder Number</TableHeaderCell>
+                                    <TableHeaderCell>Sale #</TableHeaderCell>
+                                    <TableHeaderCell>Bidder #</TableHeaderCell>
                                     <TableHeaderCell>Purchase Amount</TableHeaderCell>
                                     <TableHeaderCell>Processor</TableHeaderCell>
                                     <TableHeaderCell>Action</TableHeaderCell>
@@ -42,7 +42,7 @@ export default function TransactionDashboard({transactions, selectedTransaction,
                                     <TableRow key={transaction.id}>
                                         <TableCell>{transaction.saleNumber}</TableCell>
                                         <TableCell>{transaction.bidderNumber}</TableCell>
-                                        <TableCell>{transaction.purchaseAmount}</TableCell>
+                                        <TableCell>${transaction.purchaseAmount}</TableCell>
                                         <TableCell>{transaction.processor}</TableCell>
                                         <TableCell>{transaction.action}</TableCell>
                                         <TableCell>
