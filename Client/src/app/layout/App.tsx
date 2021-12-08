@@ -1,43 +1,40 @@
 import React, { Fragment } from 'react';
-// import { Routes, Route } from 'react-router-dom';
-// import logo from './logo.svg';
-// import './App.css';
-import './styles.css';
-// import Home from '../../Components/Home';
-// import AddonDisplay from '../../Components/AddonDisplay';
-// import AddonGUI from '../../Components/AddonGUI';
-// import DataManagement from '../../Components/DataManagement/DataManagement';
-// import LiveSaleDisplay from '../../Components/LiveSaleDisplay';
-// import SaleScrollDisplay from '../../Components/SaleScrollDisplay';
-// import TransactionGUI from '../../Components/TransactionGUI';
-// import Navigation from '../../Components/Navigation';
-import NavBar from './NavBar';
 import { Container } from 'semantic-ui-react';
-import Buyer from '../../Components/DataManagement/BuyerManager';
-// import Transaction from '../../Components/DataManagement/TransactionManager';
-// import Exhibitor from '../../Components/DataManagement/ExhibitorManager';
+import { Route, Routes } from 'react-router-dom';
+import './styles.css';
+import NavBar from './NavBar';
+import HomePage from '../../Components/Home/HomePage';
+import BuyerManager from '../../Components/DataManagement/BuyerManager';
+import DataManagement from '../../Components/DataManagement/DataManagement';
+import ExhibitorManager from '../../Components/DataManagement/ExhibitorManager';
+import TransactionManager from '../../Components/DataManagement/TransactionManager';
+import TransactionGUI from '../../Components/TransactionGUI/TransactionGUI';
+import LiveSaleDisplay from '../../Components/LiveSaleDisplay/LiveSaleDisplay';
+import SaleScrollDisplay from '../../Components/SaleScrollDisplay/SaleScrollDisplay';
+import AddonGUI from '../../Components/AddonGUI/AddonGUI';
+import AddonDisplay from '../../Components/AddonDisplay/AddonDisplay';
+import BuyerForm from '../../Components/DataManagement/form/BuyerForm';
 
 function App() {
   return (
     <>
       <NavBar/>
       <Container className='app-container'>
-        <Buyer/>
-        {/* <Exhibitor/>
-        <Transaction/> */}
-      </Container>
-      {/* <Container style={{marginTop:'7em'}}>
-        <Navigation/>
         <Routes>
-          <Route path='/Datamanagement' element={<DataManagement/>}/>
-          <Route path='/TransactionGUI' element={<TransactionGUI/>}/>
-          <Route path='/LiveSaleDisplay' element={<LiveSaleDisplay/>}/>
-          <Route path='/SaleScrollDisplay' element={<SaleScrollDisplay/>}/>
-          <Route path='/AddonGUI' element={<AddonGUI/>}/>
-          <Route path='/AddonDisplay' element={<AddonDisplay/>}/>
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<HomePage />}/>
+          <Route path='/dataManagement' element={<DataManagement />}/>
+          <Route path='/dataManagement/buyers' element={<BuyerManager />}/>
+          <Route path='/dataManagement/exhibitors' element={<ExhibitorManager />}/>
+          <Route path='/dataManagement/transactions' element={<TransactionManager />}/>
+          <Route path='/transactionGUI' element={<TransactionGUI />}/>
+          <Route path='/liveSaleDisplay' element={<LiveSaleDisplay />}/>
+          <Route path='/saleScrollDisplay' element={<SaleScrollDisplay />}/>
+          <Route path='/addonGUI' element={<AddonGUI />}/>
+          <Route path='/addonDisplay' element={<AddonDisplay />}/>
+
+          {/* <Route path='/dataManagement/buyers/:id' element={<BuyerForm />} /> */}
         </Routes>
-      </Container> */}
+      </Container>
     </>
   );
 }

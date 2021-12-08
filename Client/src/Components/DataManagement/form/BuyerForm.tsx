@@ -41,15 +41,12 @@ export default observer( function BuyerForm() {
     function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const {name, value} = event.target;
         setBuyer({...buyer, [name]: value});
-        if(name === 'email') {
-
-        }
     }
 
     return (
         <Segment className='add-form create-form' clearing>
             <Form onSubmit={handleSubmit} autoComplete='off'>
-                <Form.Input required={true} label='Bidder Number'placeholder='Bidder Number' value={buyer.bidderNumber} name='bidderNumber' onChange={handleInputChange}/>
+                <Form.Input required={true} label='Bidder #' placeholder='Bidder #' value={buyer.bidderNumber} name='bidderNumber' onChange={handleInputChange}/>
                 <Form.Input required={true} label='Name' placeholder='Name'value={buyer.name} name='name' onChange={handleInputChange}/>
                 <Form.Input required={true} label ='Contact Name' placeholder='Contact Name' value={buyer.contactName} name='contactName' onChange={handleInputChange}/>
                 <Form.Input required={true} type='phone' label='Phone Number' placeholder='Phone Number' value={buyer.phone} name='phone' onChange={handleInputChange}/>

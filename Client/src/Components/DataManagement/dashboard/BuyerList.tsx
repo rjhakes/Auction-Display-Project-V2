@@ -1,41 +1,66 @@
-import React from 'react';
-import { Item, Segment, Button, Label } from 'semantic-ui-react';
-import { BuyerModel } from '../../../app/Models/Buyer';
+import { observer } from 'mobx-react-lite';
+import React, { SyntheticEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell } from 'semantic-ui-react';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { useStore } from '../../../app/stores/store';
 
-interface Props {
-    buyers: BuyerModel[];
-    // selectedBuyer: BuyerModel | undefined;
-    selectBuyer: (id: string) => void;
-    // cancelSelectBuyer: () => void;
-    deleteBuyer: (id: string) => void;
-}
+export default observer( function BuyerList() {
+    const {buyerStore} = useStore();
+    const {buyersByBidNum, deleteBuyer, loading, openForm} = buyerStore;
 
-// export default function BuyerList({buyers, selectedBuyer, selectBuyer, cancelSelectBuyer}: Props) {
-export default function BuyerList({buyers, selectBuyer, deleteBuyer}: Props) {
+    const [target, setTarget] = useState('');
+    
+    function handleBuyerDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+        setTarget(e.currentTarget.name);
+        deleteBuyer(id);
+    }    
+
+    if (buyerStore.loadingInitial) return <LoadingComponent content='Loaading app' />
     return (
-        <Segment>
-            <Item.Group divided>
-                {buyers.map(buyer => (
-                    <Item key={buyer.id}>
-                        <Item.Content>
-                            
-                            <Item.Header as='a'>{buyer.bidderNumber}</Item.Header>
-                            <Label basic content="Name"/>
-                            <Item.Meta>{buyer.name}</Item.Meta>
-                            <Item.Description>
-                                <Label basic content="Contact Name"/>
-                                <div>{buyer.contactName}</div>
-                                <Label basic content="Contact Info"/>
-                                <div>{buyer.phone}, {buyer.email}</div>
-                            </Item.Description>
-                            <Item.Extra>
-                                <Button onClick={() => selectBuyer(buyer.id)} floated="right" content='View' color='green'/>
-                                <Button onClick={() => deleteBuyer(buyer.id)} floated="right" content='Delete' color='red'/>
-                            </Item.Extra>
-                        </Item.Content>
-                    </Item>
-                ))}
-            </Item.Group>
-        </Segment>
+        <>
+            <div className='div-data-table-header'>
+                <Table inverted fixed stackable className='data-table-header'>
+                    <TableHeader  className='table-body'>
+                        <TableRow className=''> 
+                            <TableHeaderCell with={1} textAlign='center'>Bidder #</TableHeaderCell>
+                            <TableHeaderCell with={1} textAlign='center'>Name</TableHeaderCell>
+                            <TableHeaderCell with={1} textAlign='center'>Contact Name</TableHeaderCell>
+                            <TableHeaderCell with={1} textAlign='center'>Phone</TableHeaderCell>
+                            <TableHeaderCell with={1} textAlign='center'>Email</TableHeaderCell>
+                            <TableHeaderCell with={1} textAlign='center'>Logo File</TableHeaderCell>
+                            <TableHeaderCell with={1} textAlign='center'>Action</TableHeaderCell>
+                        </TableRow>
+                    </TableHeader>
+                </Table>
+            </div>
+            <div className='div-data-table-body'>
+                <Table inverted fixed striped stackable className='data-table-body'>
+                    <TableBody className='table-body'>
+                        {buyersByBidNum.map(buyer => (
+                            <TableRow key={buyer.id}>
+                                <TableCell width={1} textAlign='center'>{buyer.bidderNumber}</TableCell>
+                                <TableCell width={1} textAlign='center'>{buyer.name}</TableCell>
+                                <TableCell width={1} textAlign='center'>{buyer.contactName}</TableCell>
+                                <TableCell width={1} textAlign='center'>{buyer.phone}</TableCell>
+                                <TableCell width={1} textAlign='center'>{buyer.email}</TableCell>
+                                <TableCell width={1} textAlign='center'>{buyer.logoFile}</TableCell>
+                                <TableCell width={1} textAlign='center'>{buyer.action}</TableCell>
+                                <TableCell width={2} textAlign='center'>
+                                    <Button onClick={() => openForm(buyer.id)} basic color='green' content='Edit' />
+                                    {/* <Button as={Link} to={`/dataManagement/buyers/${buyer.id}`} basic color='green' content='Edit' /> */}
+                                    <Button 
+                                        name={buyer.id}
+                                        onClick={(e) => handleBuyerDelete(e, buyer.id)} 
+                                        loading={loading && target === buyer.id} 
+                                        basic color='red' 
+                                        content='Delete' />    
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+        </>
     )
-}
+})

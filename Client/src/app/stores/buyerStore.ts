@@ -20,16 +20,43 @@ export default class BuyerStore {
     }
 
     loadBuyers = async () => {
+        this.loadingInitial = true;
         try {
             const buyers = await agent.Buyers.list();
             buyers.forEach(buyer => {
-                this.buyerRegistry.set(buyer.id, buyer);
+                this.setBuyer(buyer);
             })
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
             this.setLoadingInitial(false);
         }
+    }
+
+    loadBuyer = async (id: string) => {
+        let buyer = this.getBuyer(id);
+        if (buyer) {
+            this.selectedBuyer = buyer;
+        } else {
+            this.loadingInitial = true;
+            try {
+                buyer = await agent.Buyers.details(id);
+                this.setBuyer(buyer);
+                this.selectedBuyer = buyer;
+                this.setLoadingInitial(false);
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        }
+    }
+
+    private setBuyer = (buyer: BuyerModel) => {
+        this.buyerRegistry.set(buyer.id, buyer);
+    }
+
+    private getBuyer = (id: string) => {
+        return this.buyerRegistry.get(id);
     }
 
     setLoadingInitial = (state: boolean) => {
@@ -96,7 +123,7 @@ export default class BuyerStore {
             await agent.Buyers.delete(id);
             runInAction(() => {
                 this.buyerRegistry.delete(id);
-                if (this.selectedBuyer?.id === id) this.cancelSelectedBuyer();
+                // if (this.selectedBuyer?.id === id) this.cancelSelectedBuyer();
                 this.loading = false;
             })
         } catch (error) {

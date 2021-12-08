@@ -1,0 +1,136 @@
+import { makeAutoObservable, runInAction } from "mobx";
+import agent from "../api/agent";
+import { TransactionModel } from "../Models/Transaction";
+import {v4 as uuid} from 'uuid';
+
+export default class TransactionStore {
+    transactionRegistry = new Map<string, TransactionModel>();
+    selectedTransaction: TransactionModel | undefined = undefined;
+    editMode = false;
+    loading = false;
+    loadingInitial = true;
+
+    constructor() {
+        makeAutoObservable(this)
+    }
+
+    get transactionsBySaleNum() {
+        return Array.from(this.transactionRegistry.values()).sort((a,b) => 
+            parseInt(a.saleNumber) - parseInt(b.saleNumber));
+    }
+
+    loadTransactions = async () => {
+        this.loadingInitial = true;
+        try {
+            const transactions = await agent.Transactions.list();
+            transactions.forEach(transaction => {
+                this.setTransaction(transaction);
+            })
+            this.setLoadingInitial(false);
+        } catch (error) {
+            console.log(error);
+            this.setLoadingInitial(false);
+        }
+    }
+
+    loadTransaction = async (id: string) => {
+        let transaction = this.getTransaction(id);
+        if (transaction) {
+            this.selectedTransaction = transaction;
+        } else {
+            this.loadingInitial = true;
+            try {
+                transaction = await agent.Transactions.details(id);
+                this.setTransaction(transaction);
+                this.selectedTransaction = transaction;
+                this.setLoadingInitial(false);
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        }
+    }
+
+    private setTransaction = (transaction: TransactionModel) => {
+        this.transactionRegistry.set(transaction.id, transaction);
+    }
+
+    private getTransaction = (id: string) => {
+        return this.transactionRegistry.get(id);
+    }
+
+    setLoadingInitial = (state: boolean) => {
+        this.loadingInitial = state;
+    }
+
+    selectTransaction = (id: string) => {
+        this.selectedTransaction = this.transactionRegistry.get(id);
+    }
+
+    cancelSelectedTransaction = () => {
+        this.selectedTransaction = undefined;
+    }
+
+    openForm = (id?: string) => {
+        id ? this.selectTransaction(id) : this.cancelSelectedTransaction();
+        this.editMode = true;
+    }
+
+    closeForm = () => {
+        this.editMode = false;
+    }
+
+    createTransaction = async (transaction: TransactionModel) => {
+        this.loading = true;
+        transaction.id = uuid();
+        try {
+            await agent.Transactions.create(transaction);
+            runInAction(() => {
+                this.transactionRegistry.set(transaction.id, transaction);
+                this.selectedTransaction = transaction;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    } 
+
+    updateTransaction = async (transaction: TransactionModel) => {
+        this.loading = true;
+        try {
+            await agent.Transactions.update(transaction);
+            runInAction(() => {
+                this.transactionRegistry.set(transaction.id, transaction);
+                this.selectedTransaction = transaction;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    deleteTransaction = async (id: string) => {
+        this.loading = true;
+        try {
+            await agent.Transactions.delete(id);
+            runInAction(() => {
+                this.transactionRegistry.delete(id);
+                // if (this.selectedTransaction?.id === id) this.cancelSelectedTransaction();
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+}

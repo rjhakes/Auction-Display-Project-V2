@@ -1,14 +1,11 @@
+import { observer } from 'mobx-react-lite'
 import React, { ChangeEvent, useState } from 'react'
-import { Button, Form, Segment } from 'semantic-ui-react'
-import { TransactionModel } from '../../../app/Models/Transaction'
+import { Button, Form, Input, Segment } from 'semantic-ui-react'
+import { useStore } from '../../../app/stores/store'
 
-interface Props {
-    transaction: TransactionModel | undefined;
-    closeForm: () => void;
-    createOrEdit: (transaction: TransactionModel) => void;
-}
-
-export default function TransactionForm({transaction: selectedTransaction, closeForm, createOrEdit}: Props) {
+export default observer( function TransactionForm() {
+    const {transactionStore} = useStore();
+    const {selectedTransaction, closeForm, createTransaction, updateTransaction, loading} = transactionStore;
 
     const initialState = selectedTransaction ?? {
         id: '',
@@ -22,7 +19,7 @@ export default function TransactionForm({transaction: selectedTransaction, close
     const [transaction, setTransaction] = useState(initialState);
 
     function handleSubmit() {
-        createOrEdit(transaction);
+        transaction.id ? updateTransaction(transaction) : createTransaction(transaction);
         
     }
 
@@ -34,14 +31,14 @@ export default function TransactionForm({transaction: selectedTransaction, close
     return (
         <Segment className='add-form create-form' clearing>
             <Form onSubmit={handleSubmit} autoComplete='off'>
-                <Form.Input placeholder='Sale Number' value={transaction.saleNumber} name='saleNumber' onChange={handleInputChange}/>
-                <Form.Input placeholder='Bidder Number' value={transaction.bidderNumber} name='bidderNumber' onChange={handleInputChange}/>
-                <Form.Input placeholder='Purchase Amount' value={transaction.purchaseAmount} name='purchaseAmount' onChange={handleInputChange}/>
-                <Form.Input placeholder='Processor' value={transaction.processor} name='processor' onChange={handleInputChange}/>
-                <Form.Input placeholder='Action' value={transaction.action} name='action' onChange={handleInputChange}/>
-                <Button onClick={handleSubmit} floated='right' positive type='submit' content='Submit' />
+                <Form.Input required={true} label='Sale #' placeholder='Sale Number' value={transaction.saleNumber} name='saleNumber' onChange={handleInputChange}/>
+                <Form.Input required={true} label='Bidder #' placeholder='Bidder Number' value={transaction.bidderNumber} name='bidderNumber' onChange={handleInputChange}/>
+                <Form.Input required={true} label='Purchase Amount' placeholder='Purchase Amount' value={transaction.purchaseAmount} name='purchaseAmount' onChange={handleInputChange}/>
+                <Form.Input label='Processor' placeholder='Processor' value={transaction.processor} name='processor' onChange={handleInputChange}/>
+                <Form.Input label='Action' placeholder='Action' value={transaction.action} name='action' onChange={handleInputChange}/>
+                <Button onClick={handleSubmit} loading={loading} floated='right' positive type='submit' content='Submit' />
                 <Button onClick={closeForm} floated='right' type='button' content='Cancel' />
             </Form>
         </Segment>
     )
-}
+})

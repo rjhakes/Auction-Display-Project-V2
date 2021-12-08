@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { Container, Menu } from 'semantic-ui-react';
 
 const NavData = (props) => {
@@ -6,9 +7,9 @@ const NavData = (props) => {
         <div className="navData">
             <Menu vertical>
                 <Container>
-                    <Menu.Item name="Buyers" />
-                    <Menu.Item name="Exhibitors" />
-                    <Menu.Item name="Transactions" />
+                    <Menu.Item as={NavLink} to='/dataManagement/buyers' name="Buyers" />
+                    <Menu.Item as={NavLink} to='/dataManagement/exhibitors' name="Exhibitors" />
+                    <Menu.Item as={NavLink} to='/dataManagement/transactions' name="Transactions" />
                 </Container>
             </Menu>
         </div>

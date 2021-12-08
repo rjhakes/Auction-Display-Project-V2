@@ -58,11 +58,31 @@ body {
 .add-form, .create-form {
   position: fixed;
   top: 6em;
-  width: 50%;
+  width: 60%;
   z-index: 10;
 }
 
+.exhibitor-form-left {
+  position: absolute;
+  left: 0;
+  width: 50%;
+  background-color: #EAEAEA !important;
+  padding-left: 1em;
+  padding-right: 1em;
+}
 
+.exhibitor-form-right {
+  position: absolute;
+  right: 0;
+  width: 50%;
+  background-color: #EAEAEA !important;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.add-create-form-div {
+  /* background-color: #EAEAEA !important; */
+}
 
 @media screen and (max-height: 450px) {
   .navData {padding-top: 15px}

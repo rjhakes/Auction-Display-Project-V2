@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { BuyerModel } from '../Models/Buyer';
+import { ExhibitorModel } from '../Models/Exhibitor';
+import { TransactionModel } from '../Models/Transaction';
 
 const sleep = (delay: number) => {
     return new Promise ((resolve) => {
@@ -36,8 +38,27 @@ const Buyers = {
     delete: (id: string) => axios.delete<void>(`/Buyer/${id}`)
 }
 
+const Transactions = {
+    list: () => requests.get<TransactionModel[]>('/Transaction'),
+    details: (id: string) => requests.get<TransactionModel>(`/Transaction/${id}`),
+    create: (transaction: TransactionModel) => axios.post<void>('/Transaction', transaction),
+    update: (transaction: TransactionModel) => axios.put<void>(`/Transaction/${transaction.id}`, transaction),
+    delete: (id: string) => axios.delete<void>(`/Transaction/${id}`)
+}
+
+const Exhibitors = {
+    list: () => requests.get<ExhibitorModel[]>('/Exhibitor'),
+    details: (id: string) => requests.get<ExhibitorModel>(`/Exhibitor/${id}`),
+    create: (exhibitor: ExhibitorModel) => axios.post<void>('/Exhibitor', exhibitor),
+    update: (exhibitor: ExhibitorModel) => axios.put<void>(`/Exhibitor/${exhibitor.id}`, exhibitor),
+    delete: (id: string) => axios.delete<void>(`/Exhibitor/${id}`)
+}
+
+
 const agent = {
-    Buyers
+    Buyers,
+    Transactions,
+    Exhibitors
 }
 
 export default agent;
