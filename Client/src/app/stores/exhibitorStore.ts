@@ -14,7 +14,7 @@ export default class ExhibitorStore {
         makeAutoObservable(this)
     }
 
-    get exhibitorsByBidNum() {
+    get exhibitorsBySaleNum() {
         return Array.from(this.exhibitorRegistry.values()).sort((a,b) => 
             parseInt(a.saleNumber) - parseInt(b.saleNumber));
     }

@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { BuyerModel } from "../models/Buyer";
 import {v4 as uuid} from 'uuid';
+import { ChangeEvent } from "react";
 
 export default class BuyerStore {
     buyerRegistry = new Map<string, BuyerModel>();
@@ -146,5 +147,13 @@ export default class BuyerStore {
                 this.loading = false;
             })
         }
+    }
+
+    importBuyers = async (e: ChangeEvent<HTMLInputElement>) => {
+
+    }
+
+    exportBuyers = async () => {
+
     }
 }

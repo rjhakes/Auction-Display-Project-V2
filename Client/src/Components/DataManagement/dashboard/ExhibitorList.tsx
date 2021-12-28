@@ -6,7 +6,7 @@ import { useStore } from '../../../app/stores/store';
 
 export default observer( function ExhibitorList() {
     const {exhibitorStore} = useStore();
-    const {exhibitorsByBidNum, deleteExhibitor, loading, openForm} = exhibitorStore;
+    const {exhibitorsBySaleNum, deleteExhibitor, loading, openForm} = exhibitorStore;
 
     const [target, setTarget] = useState('');
     
@@ -39,7 +39,7 @@ export default observer( function ExhibitorList() {
             <div className='div-data-table-body'>
                 <Table inverted fixed striped stackable className='data-table-body'>
                     <TableBody className='table-body'>
-                        {exhibitorsByBidNum.map(exhibitor => (
+                        {exhibitorsBySaleNum.map(exhibitor => (
                             <TableRow key={exhibitor.id}>
                                 <TableCell width={1} textAlign='center'>{exhibitor.saleNumber}</TableCell>
                                 <TableCell width={1} textAlign='center'>{exhibitor.name}</TableCell>
