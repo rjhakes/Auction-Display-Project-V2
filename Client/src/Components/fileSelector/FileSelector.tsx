@@ -12,6 +12,7 @@ export default function FileSelector() {
         console.log(e.target);
         // console.log(e.target[0].name)
         if (files && files.length) {
+            console.log('file', inputFile);
             const filename = files[0].name;
             console.log('fileName', filename)
             var parts = filename.split(".");
@@ -23,7 +24,7 @@ export default function FileSelector() {
 
     const importBuyers = () => {
         inputFile.current?.click();
-        console.log(inputFile);
+        
     }
 
     return (
