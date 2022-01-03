@@ -80,10 +80,6 @@ body {
   padding-right: 1em;
 }
 
-.add-create-form-div {
-  /* background-color: #EAEAEA !important; */
-}
-
 @media screen and (max-height: 450px) {
   .navData {padding-top: 15px}
 }

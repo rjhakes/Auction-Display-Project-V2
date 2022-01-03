@@ -1,8 +1,11 @@
 import { makeAutoObservable, runInAction } from "mobx";
+// import { CSVReader } from "react-papaparse";
+import { default as Papa } from "react-papaparse";
 import agent from "../api/agent";
 import { BuyerModel } from "../models/Buyer";
 import {v4 as uuid} from 'uuid';
 import { ChangeEvent } from "react";
+// import sleep from '../api/sleep.js';
 
 export default class BuyerStore {
     buyerRegistry = new Map<string, BuyerModel>();
@@ -149,9 +152,43 @@ export default class BuyerStore {
         }
     }
 
-    importBuyers = async (e: ChangeEvent<HTMLInputElement>) => {
-
+    importBuyers = (e: File): string => {
+        console.log(e)
+        let reader = e.stream().getReader();
+        let decoder = new TextDecoder('utf-8');
+        reader?.read().then(function (result) {
+            console.log(decoder.decode(result.value));
+            return decoder.decode(result.value);
+        })
+        return "";
     }
+
+    // implant csvImport into importBuyers????? 
+
+    csvImport = async (e: FileList) => {
+        let line: string[];
+        let csvBuyer = this.importBuyers(e[0]);
+        console.log(csvBuyer);
+        let csvArr = csvBuyer.split('\n');
+        for (let i = 1; i < csvArr.length; i++) {
+            line = csvArr[i].split(',');
+            // console.log(line);
+            this.selectedBuyer = {
+                id: "",
+                bidderNumber: line[0],
+                name: line[1],
+                contactName: line[2],
+                phone: line[3],
+                email: line[4],
+                logoFile: line[5],
+                action: line[6]
+            }
+            console.log(this.selectedBuyer);
+            this.createBuyer(this.selectedBuyer);
+        }
+    }
+
+    
 
     exportBuyers = async () => {
 
