@@ -152,45 +152,62 @@ export default class BuyerStore {
         }
     }
 
-    importBuyers = (e: File): string => {
-        console.log(e)
-        let reader = e.stream().getReader();
-        let decoder = new TextDecoder('utf-8');
-        reader?.read().then(function (result) {
-            console.log(decoder.decode(result.value));
-            return decoder.decode(result.value);
-        })
-        return "";
-    }
-
-    // implant csvImport into importBuyers????? 
-
     csvImport = async (e: FileList) => {
         let line: string[];
-        let csvBuyer = this.importBuyers(e[0]);
-        console.log(csvBuyer);
-        let csvArr = csvBuyer.split('\n');
-        for (let i = 1; i < csvArr.length; i++) {
-            line = csvArr[i].split(',');
-            // console.log(line);
-            this.selectedBuyer = {
-                id: "",
-                bidderNumber: line[0],
-                name: line[1],
-                contactName: line[2],
-                phone: line[3],
-                email: line[4],
-                logoFile: line[5],
-                action: line[6]
+        let csvBuyer = "";
+        setTimeout(() => {
+            let csvArr = csvBuyer.split('\n');
+            for (let i = 1; i < csvArr.length; i++) {
+                line = csvArr[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                line[1] = line[1].replace(/"/g, '');
+                this.selectedBuyer = {
+                    id: "",
+                    bidderNumber: line[0],
+                    name: line[1],
+                    contactName: line[2],
+                    phone: line[3],
+                    email: line[4],
+                    logoFile: line[5],
+                    action: line[6]
+                }
+                this.createBuyer(this.selectedBuyer);
             }
-            console.log(this.selectedBuyer);
-            this.createBuyer(this.selectedBuyer);
-        }
+        }, 0);  
+        let reader = e[0].stream().getReader();
+        let decoder = new TextDecoder('utf-8');
+        reader?.read().then(function (result) {
+            csvBuyer = decoder.decode(result.value);
+        })
+        
     }
 
-    
-
-    exportBuyers = async () => {
-
+    csvExport = async () => {
+        const csvRows = [];
+        csvRows.push("bidderNumber,name,contactName,phone,email,logoFileName,")
+        this.buyerRegistry.forEach(element => {
+            const values = [];
+            values.push(element.bidderNumber);
+            if(element.name.includes(',')) {
+                console.log(element.name);
+                element.name = '"' + element.name + '"';
+            }
+            values.push(element.name);
+            values.push(element.contactName);
+            values.push(element.phone);
+            values.push(element.email);
+            values.push(element.logoFile);
+            values.push(element.action);
+            csvRows.push(values.join(','));
+        });
+        const csvData = csvRows.join('\n');
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.setAttribute('hidden', '')
+        a.setAttribute('href', url)
+        a.setAttribute('download', 'buyerData.csv')
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
     }
 }

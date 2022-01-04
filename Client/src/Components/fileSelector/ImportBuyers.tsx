@@ -39,23 +39,12 @@ export default function FileSelector() {
     // const [csv, setCSV] = useState("")
     const inputFile = useRef<HTMLInputElement | null>(null);
     const {buyerStore} = useStore();
-    const {importBuyers, csvImport} = buyerStore;
+    const {csvImport, csvExport} = buyerStore;
     
     const handleFileUpload = (e: any) => {
         const { files } = e.target;
-        
-        console.log(e);
-        console.log(e.target);
-        // console.log(e.target[0].name)
         if (files && files.length) {
-            console.log('file', inputFile);
-            const filename = files[0].name;
-            console.log('fileName', filename)
-            var parts = filename.split(".");
-            const fileType = parts[parts.length - 1];
-            console.log("fileType", fileType);
-            // setCSV(files[0]);
-            csvImport(files)
+            csvImport(files);
         }
     }
 
@@ -63,16 +52,14 @@ export default function FileSelector() {
         inputFile.current?.click();
     }
 
+    const getCSVReport = () => {
+        console.log("export buyer");
+    }
+
     return (
         <>
-            {/* <CSVReader
-                ref={inputFile}
-            >
-
-            </CSVReader>
-             */}
             <input id="upload-csv" style={{display: "none"}} ref={inputFile} onChange={handleFileUpload} type="file" accept='.csv'/>
-            <Button floated='right' color='blue' content='Export Buyers'/>
+            <Button onClick={csvExport} floated='right' color='blue' content='Export Buyers'/>
             <Button onClick={fileSelectBuyers} floated='right' color='blue' content='Import Buyers'/>
         </>
         
