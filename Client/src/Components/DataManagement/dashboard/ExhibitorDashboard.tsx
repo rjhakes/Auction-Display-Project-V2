@@ -34,7 +34,7 @@ export default observer( function ExhibitorDashboard() {
                 <Button onClick={() => openForm()} positive content='Add Exhibitor'/>
                 <Button 
                 onClick={() => { 
-                        if (window.confirm('Are you sure you want to DELETE ALL EXHIBITORS?')) 
+                        if (window.confirm('Are you sure you want to DELETE ALL EXHIBITORS?\nA csv file will download to preserve the data.')) 
                         deleteAllExhibitors()
                         }} 
                         loading={loading} negative content='Delete All Exhibitors'/>

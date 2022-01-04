@@ -140,6 +140,7 @@ export default class BuyerStore {
 
     deleteAllBuyers = async () => {
         this.loading = true;
+        this.csvExport();
         try {
             this.buyerRegistry.forEach(async buyer => {
                 this.deleteBuyer(buyer.id);
@@ -177,7 +178,6 @@ export default class BuyerStore {
         reader?.read().then(function (result) {
             csvBuyer = decoder.decode(result.value);
         })
-        
     }
 
     csvExport = async () => {

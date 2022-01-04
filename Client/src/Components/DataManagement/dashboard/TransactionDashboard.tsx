@@ -33,7 +33,7 @@ export default observer(function TransactionDashboard() {
                 <Button onClick={() => openForm()} positive content='Add Transaction'/>
                 <Button 
                     onClick={() => { 
-                        if (window.confirm('Are you sure you want to DELETE ALL TRANSACTIONS?')) 
+                        if (window.confirm('Are you sure you want to DELETE ALL TRANSACTIONS?\nA csv file will download to preserve the data.')) 
                         deleteAllTransactions()
                         }} 
                         loading={loading} negative content='Delete All Transactions'/>

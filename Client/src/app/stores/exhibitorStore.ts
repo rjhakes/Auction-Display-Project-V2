@@ -136,6 +136,7 @@ export default class ExhibitorStore {
 
     deleteAllExhibitors = async () => {
         this.loading = true;
+        this.csvExport();
         try {
             this.exhibitorRegistry.forEach(async exhibitor => {
                 this.deleteExhibitor(exhibitor.id);
@@ -176,7 +177,6 @@ export default class ExhibitorStore {
         reader?.read().then(function (result) {
             csvBuyer = decoder.decode(result.value);
         })
-        
     }
 
     csvExport = async () => {

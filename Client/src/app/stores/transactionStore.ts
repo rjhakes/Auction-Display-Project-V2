@@ -136,6 +136,7 @@ export default class TransactionStore {
 
     deleteAllTransactions = async () => {
         this.loading = true;
+        this.csvExport();
         try {
             this.transactionRegistry.forEach(async transaction => {
                 this.deleteTransaction(transaction.id);
@@ -170,7 +171,6 @@ export default class TransactionStore {
         reader?.read().then(function (result) {
             csvBuyer = decoder.decode(result.value);
         })
-        
     }
 
     csvExport = async () => {

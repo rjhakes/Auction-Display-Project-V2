@@ -34,7 +34,7 @@ export default observer( function BuyerDashboard() {
                 <Button onClick={() => openForm()} positive content='Add Buyer'/>
                 <Button
                     onClick={() => { 
-                    if (window.confirm('Are you sure you want to DELETE ALL BUYERS?')) 
+                    if (window.confirm('Are you sure you want to DELETE ALL BUYERS?\nA csv file will download to preserve the data.')) 
                     deleteAllBuyers()
                     }} 
                     loading={loading} negative content='Delete All Buyers'/>
