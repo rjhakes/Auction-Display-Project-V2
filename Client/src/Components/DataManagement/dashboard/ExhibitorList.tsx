@@ -22,16 +22,17 @@ export default observer( function ExhibitorList() {
                 <Table inverted fixed stackable className='data-table-header'>
                     <TableHeader  className='table-body'>
                         <TableRow className=''> 
-                            <TableHeaderCell with={1} textAlign='center'>Sale #</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Name</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Tag</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Species</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Description</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Check in Weight</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Show Class Name</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Placing</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Buy Back</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Action</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Sale #</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Name</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Tag</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Species</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Description</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Check in Weight</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Club Name</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Show Class Name</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Placing</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Buy Back</TableHeaderCell>
+                            <TableHeaderCell width={2} textAlign='center'></TableHeaderCell>
                         </TableRow>
                     </TableHeader>
                 </Table>
@@ -51,7 +52,6 @@ export default observer( function ExhibitorList() {
                                 <TableCell width={1} textAlign='center'>{exhibitor.showClassName}</TableCell>
                                 <TableCell width={1} textAlign='center'>{exhibitor.placing}</TableCell>
                                 <TableCell width={1} textAlign='center'>{exhibitor.buyBack}</TableCell>
-                                <TableCell width={1} textAlign='center'>{exhibitor.action}</TableCell>
                                 <TableCell width={2} textAlign='center'>
                                     <Button onClick={() => openForm(exhibitor.id)} basic color='green' content='Edit' />
                                     <Button 

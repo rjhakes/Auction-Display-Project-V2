@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button, Container } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
@@ -8,7 +8,8 @@ import TransactionList from './TransactionList';
 
 export default observer(function TransactionDashboard() {
     const {transactionStore} = useStore();
-    const {editMode, openForm, deleteAllTransactions, loading} = transactionStore;
+    const {editMode, openForm, deleteAllTransactions, loading, csvImport, csvExport} = transactionStore;
+    const inputFile = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
         transactionStore.loadTransactions();
@@ -16,6 +17,16 @@ export default observer(function TransactionDashboard() {
 
     if (transactionStore.loadingInitial) return <LoadingComponent content='Loaading app' />
 
+    const handleFileUpload = (e: any) => {
+        const { files } = e.target;
+        if (files && files.length) {
+            csvImport(files);
+        }
+    }
+
+    const fileSelectExhibitors = () => {
+        inputFile.current?.click();
+    }
     return (
         <>
             <Container className='container-data-buttons' fixed='top' style={{marginBottom: '1em'}}>
@@ -26,8 +37,9 @@ export default observer(function TransactionDashboard() {
                         deleteAllTransactions()
                         }} 
                         loading={loading} negative content='Delete All Transactions'/>
-                <Button floated='right' color='blue'  content='Export Transactions'/>
-                <Button floated='right' color='blue' content='Import Transactions'/>
+                <input id="upload-csv" style={{display: "none"}} ref={inputFile} onChange={handleFileUpload} type="file" accept='.csv'/>
+                <Button onClick={csvExport} floated='right' color='blue' content='Export Transactions'/>
+                <Button onClick={fileSelectExhibitors} floated='right' color='blue' content='Import Transactions'/>
             </Container>
             <Container className='add-form create-form'>
                 {editMode &&

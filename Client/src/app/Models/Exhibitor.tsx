@@ -11,5 +11,4 @@ export interface ExhibitorModel
     showClassName: string,
     placing: string,
     buyBack: string,
-    action: string
 }

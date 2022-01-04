@@ -47,12 +47,13 @@ body {
 
 .div-data-table-header {
   position: sticky;
-  width: 77%;
+  /* width: 83%; */
 }
 
 .div-data-table-body {
   overflow-y: auto;
   height: 90%;
+  /* width: 100%; */
 }
 
 .add-form, .create-form {

@@ -147,4 +147,52 @@ export default class TransactionStore {
             })
         }
     }
+
+    csvImport = async (e: FileList) => {
+        let line: string[];
+        let csvBuyer = "";
+        setTimeout(() => {
+            let csvArr = csvBuyer.split('\n');
+            for (let i = 1; i < csvArr.length; i++) {
+                line = csvArr[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                this.selectedTransaction = {
+                    id: "",
+                    saleNumber: line[0],
+                    bidderNumber: line[1],
+                    purchaseAmount: line[2],
+                    processor: line[3]
+                }
+                this.createTransaction(this.selectedTransaction);
+            }
+        }, 0);  
+        let reader = e[0].stream().getReader();
+        let decoder = new TextDecoder('utf-8');
+        reader?.read().then(function (result) {
+            csvBuyer = decoder.decode(result.value);
+        })
+        
+    }
+
+    csvExport = async () => {
+        const csvRows = [];
+        csvRows.push("saleNumber,bidderNumber,purchaseAmount,processor")
+        this.transactionRegistry.forEach(element => {
+            const values = [];
+            values.push(element.saleNumber);
+            values.push(element.bidderNumber);
+            values.push(element.purchaseAmount);
+            values.push(element.processor);
+            csvRows.push(values.join(','));
+        });
+        const csvData = csvRows.join('\n');
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.setAttribute('hidden', '')
+        a.setAttribute('href', url)
+        a.setAttribute('download', 'transactionData.csv')
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+    }
 }

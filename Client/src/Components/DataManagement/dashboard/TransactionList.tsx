@@ -22,11 +22,11 @@ export default observer( function TransactionList() {
                 <Table inverted fixed stackable className='data-table-header'>
                     <TableHeader  className='table-body'>
                         <TableRow className=''> 
-                            <TableHeaderCell with={1} textAlign='center'>Sale #</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Bidder #</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Purchase Amount</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Processor</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Action</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Sale #</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Bidder #</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Purchase Amount</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Processor</TableHeaderCell>
+                            <TableHeaderCell width={2} textAlign='center'></TableHeaderCell>
                         </TableRow>
                     </TableHeader>
                 </Table>
@@ -40,7 +40,6 @@ export default observer( function TransactionList() {
                                 <TableCell width={1} textAlign='center'>{transaction.bidderNumber}</TableCell>
                                 <TableCell width={1} textAlign='center'>{transaction.purchaseAmount}</TableCell>
                                 <TableCell width={1} textAlign='center'>{transaction.processor}</TableCell>
-                                <TableCell width={1} textAlign='center'>{transaction.action}</TableCell>
                                 <TableCell width={2} textAlign='center'>
                                     <Button onClick={() => openForm(transaction.id)} basic color='green' content='Edit' />
                                     <Button 

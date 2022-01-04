@@ -147,4 +147,64 @@ export default class ExhibitorStore {
             })
         }
     }
+
+    csvImport = async (e: FileList) => {
+        let line: string[];
+        let csvBuyer = "";
+        setTimeout(() => {
+            let csvArr = csvBuyer.split('\n');
+            for (let i = 1; i < csvArr.length; i++) {
+                line = csvArr[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                this.selectedExhibitor = {
+                    id: "",
+                    saleNumber: line[0],
+                    name: line[1],
+                    tag: line[2],
+                    species: line[3],
+                    description: line[4],
+                    checkInWeight: line[5],
+                    clubName: line[6],
+                    showClassName: line[7],
+                    placing: line[8],
+                    buyBack: line[9],
+                }
+                this.createExhibitor(this.selectedExhibitor);
+            }
+        }, 0);  
+        let reader = e[0].stream().getReader();
+        let decoder = new TextDecoder('utf-8');
+        reader?.read().then(function (result) {
+            csvBuyer = decoder.decode(result.value);
+        })
+        
+    }
+
+    csvExport = async () => {
+        const csvRows = [];
+        csvRows.push("saleNumber,fullName,tag,species,animalDescription,checkInWeight,clubName,showClassName,placing,buyback")
+        this.exhibitorRegistry.forEach(element => {
+            const values = [];
+            values.push(element.saleNumber);
+            values.push(element.name);
+            values.push(element.tag);
+            values.push(element.species);
+            values.push(element.description);
+            values.push(element.checkInWeight);
+            values.push(element.clubName);
+            values.push(element.showClassName);
+            values.push(element.placing);
+            values.push(element.buyBack);
+            csvRows.push(values.join(','));
+        });
+        const csvData = csvRows.join('\n');
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.setAttribute('hidden', '')
+        a.setAttribute('href', url)
+        a.setAttribute('download', 'exhibitorData.csv')
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+    }
 }

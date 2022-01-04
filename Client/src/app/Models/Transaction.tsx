@@ -5,5 +5,4 @@ export interface TransactionModel
     bidderNumber: string,
     purchaseAmount: string,
     processor: string,
-    action: string
 }

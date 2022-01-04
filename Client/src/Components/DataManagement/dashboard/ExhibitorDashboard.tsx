@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button, Container } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
@@ -9,7 +9,8 @@ import ExhibitorList from './ExhibitorList';
 export default observer( function ExhibitorDashboard() {
 
     const {exhibitorStore} = useStore();
-    const {editMode, openForm, deleteAllExhibitors, loading} = exhibitorStore;
+    const {editMode, openForm, deleteAllExhibitors, loading, csvImport, csvExport} = exhibitorStore;
+    const inputFile = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
         exhibitorStore.loadExhibitors();
@@ -17,6 +18,16 @@ export default observer( function ExhibitorDashboard() {
 
     if (exhibitorStore.loadingInitial) return <LoadingComponent content='Loaading app' />
 
+    const handleFileUpload = (e: any) => {
+        const { files } = e.target;
+        if (files && files.length) {
+            csvImport(files);
+        }
+    }
+
+    const fileSelectExhibitors = () => {
+        inputFile.current?.click();
+    }
     return (
         <>
             <Container className='container-data-buttons' fixed='top' style={{marginBottom: '1em'}}>
@@ -27,8 +38,10 @@ export default observer( function ExhibitorDashboard() {
                         deleteAllExhibitors()
                         }} 
                         loading={loading} negative content='Delete All Exhibitors'/>
-                <Button floated='right' color='blue' content='Export Exhibitors'/>
-                <Button floated='right' color='blue' content='Import Exhibitors'/>
+                <input id="upload-csv" style={{display: "none"}} ref={inputFile} onChange={handleFileUpload} type="file" accept='.csv'/>
+                <Button onClick={csvExport} floated='right' color='blue' content='Export Exhibitors'/>
+                <Button onClick={fileSelectExhibitors} floated='right' color='blue' content='Import Exhibitors'/>
+
             </Container>
             <Container className='add-form create-form'>
                 {editMode &&

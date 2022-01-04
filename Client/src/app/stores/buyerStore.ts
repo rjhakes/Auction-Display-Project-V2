@@ -168,7 +168,6 @@ export default class BuyerStore {
                     phone: line[3],
                     email: line[4],
                     logoFile: line[5],
-                    action: line[6]
                 }
                 this.createBuyer(this.selectedBuyer);
             }
@@ -188,7 +187,6 @@ export default class BuyerStore {
             const values = [];
             values.push(element.bidderNumber);
             if(element.name.includes(',')) {
-                console.log(element.name);
                 element.name = '"' + element.name + '"';
             }
             values.push(element.name);
@@ -196,7 +194,6 @@ export default class BuyerStore {
             values.push(element.phone);
             values.push(element.email);
             values.push(element.logoFile);
-            values.push(element.action);
             csvRows.push(values.join(','));
         });
         const csvData = csvRows.join('\n');

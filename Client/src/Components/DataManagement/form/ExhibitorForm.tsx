@@ -51,7 +51,6 @@ export default observer( function ExhibitorForm() {
                     <Form.Input label='Show Class' placeholder='Show Class' value={exhibitor.showClassName} name='showClassName' onChange={handleInputChange}/>
                     <Form.Input label='Placing' placeholder='Placing' value={exhibitor.placing} name='placing' onChange={handleInputChange}/>
                     <Form.Input label='Buy Back' placeholder='Buy Back' value={exhibitor.buyBack} name='buyBack' onChange={handleInputChange}/>
-                    <Form.Input label='Action' placeholder='Action' value={exhibitor.action} name='action' onChange={handleInputChange}/>
                     <Button onClick={handleSubmit} loading={loading} floated='right' positive type='submit' content='Submit' />
                     <Button onClick={closeForm} floated='right' type='button' content='Cancel' />
                 </div>

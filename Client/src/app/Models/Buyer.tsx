@@ -7,5 +7,4 @@ export interface BuyerModel
     phone: string,
     email: string,
     logoFile: string,
-    action: string
 }

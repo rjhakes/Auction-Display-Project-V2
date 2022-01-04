@@ -35,7 +35,6 @@ export default observer( function TransactionForm() {
                 <Form.Input required={true} label='Bidder #' placeholder='Bidder Number' value={transaction.bidderNumber} name='bidderNumber' onChange={handleInputChange}/>
                 <Form.Input required={true} label='Purchase Amount' placeholder='Purchase Amount' value={transaction.purchaseAmount} name='purchaseAmount' onChange={handleInputChange}/>
                 <Form.Input label='Processor' placeholder='Processor' value={transaction.processor} name='processor' onChange={handleInputChange}/>
-                <Form.Input label='Action' placeholder='Action' value={transaction.action} name='action' onChange={handleInputChange}/>
                 <Button onClick={handleSubmit} loading={loading} floated='right' positive type='submit' content='Submit' />
                 <Button onClick={closeForm} floated='right' type='button' content='Cancel' />
             </Form>

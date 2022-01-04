@@ -60,7 +60,6 @@ export default observer( function BuyerForm() {
                     value={buyer.email} name='email' onChange={handleInputChange}  
                 />
                 <Form.Input label='Logo File' placeholder='Logo File' value={buyer.logoFile} name='logoFile' onChange={handleInputChange}/>
-                <Form.Input label='Action' placeholder='Action' value={buyer.action} name='action' onChange={handleInputChange}/>
                 <Button onClick={handleSubmit} loading={loading} floated='right' positive type='submit' content='Submit' />
                 <Button onClick={closeForm} floated='right' type='button' content='Cancel' />
             </Form>

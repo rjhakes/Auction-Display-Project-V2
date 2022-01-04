@@ -22,13 +22,13 @@ export default observer( function BuyerList() {
                 <Table inverted fixed stackable className='data-table-header'>
                     <TableHeader  className='table-body'>
                         <TableRow className=''> 
-                            <TableHeaderCell with={1} textAlign='center'>Bidder #</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Name</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Contact Name</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Phone</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Email</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Logo File</TableHeaderCell>
-                            <TableHeaderCell with={1} textAlign='center'>Action</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Bidder #</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Name</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Contact Name</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Phone</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Email</TableHeaderCell>
+                            <TableHeaderCell width={1} textAlign='center'>Logo File</TableHeaderCell>
+                            <TableHeaderCell width={2} textAlign='center'></TableHeaderCell>
                         </TableRow>
                     </TableHeader>
                 </Table>
@@ -44,7 +44,6 @@ export default observer( function BuyerList() {
                                 <TableCell width={1} textAlign='center'>{buyer.phone}</TableCell>
                                 <TableCell width={1} textAlign='center'>{buyer.email}</TableCell>
                                 <TableCell width={1} textAlign='center'>{buyer.logoFile}</TableCell>
-                                <TableCell width={1} textAlign='center'>{buyer.action}</TableCell>
                                 <TableCell width={2} textAlign='center'>
                                     <Button onClick={() => openForm(buyer.id)} basic color='green' content='Edit' />
                                     <Button 
