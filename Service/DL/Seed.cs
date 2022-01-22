@@ -32,7 +32,8 @@ namespace DL
                     Email = "bobby@gmail.com",
                     LogoFile = "bobbyLogo.png",
                     Action = ""
-                }
+                },
+                
             };
             await context.Buyers.AddRangeAsync(buyers);
             await context.SaveChangesAsync();

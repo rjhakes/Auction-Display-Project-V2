@@ -13,6 +13,16 @@
 * npm start
 ### Tasks
   - [ ] Login
+  - [ ] Main page - authenticated state
+    - [ ] event calendar
+    - [ ] professional contact sheet 
+    - [ ] fairgrounds info
+    - [ ] software and git info
+  - [ ] Main page - non-authenticated state
+    - [ ] event calendar
+    - [ ] fairgrounds info
+    - [ ] services contact info
+    - [ ] sponser info?
   - [ ] Navigation bar
     - [ ] Data Management
       - [ ] Exhibitor

@@ -14,14 +14,20 @@ namespace API.Controllers
     public class BuyerController : ControllerBase
     {
         private readonly IBuyerBL _buyerBL;
+        // private readonly DataContext _context;
         // private readonly IMediator _mediator;
-
-        private readonly ILogger<BuyerController> _logger;
+        // private readonly ILogger<BuyerController> _logger;
+        
         public BuyerController(IBuyerBL buyerBL) //IMediator mediator)
         {
             _buyerBL = buyerBL;
             // _mediator = mediator;
         }
+
+        // public BuyerController(DataContext context)
+        // {
+        //     _context = context;
+        // }
         // public BuyerController(ILogger<BuyerController> logger)
         // {
         //     _logger = logger;
