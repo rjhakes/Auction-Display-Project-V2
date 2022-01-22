@@ -18,6 +18,7 @@ export default class BuyerStore {
         makeAutoObservable(this)
     }
 
+    // sort
     get buyersByBidNum() {
         return Array.from(this.buyerRegistry.values()).sort((a,b) => 
             parseInt(a.bidderNumber) - parseInt(b.bidderNumber));
