@@ -15,7 +15,7 @@ export default observer( function ExhibitorList() {
         deleteExhibitor(id);
     }    
 
-    if (exhibitorStore.loadingInitial) return <LoadingComponent content='Loaading app' />
+    if (exhibitorStore.loadingInitial) return <LoadingComponent content='Loaading ...' />
     return (
         <>
             <div className='div-data-table-header'>

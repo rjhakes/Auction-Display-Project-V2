@@ -15,7 +15,7 @@ export default observer( function BuyerDashboard() {
         buyerStore.loadBuyers();
     }, [buyerStore])
 
-    if (buyerStore.loadingInitial) return <LoadingComponent content='Loaading app' />
+    if (buyerStore.loadingInitial) return <LoadingComponent content='Loaading ...' />
 
     const handleFileUpload = (e: any) => {
         const { files } = e.target;

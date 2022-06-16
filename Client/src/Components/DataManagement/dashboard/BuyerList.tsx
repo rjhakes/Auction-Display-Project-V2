@@ -15,7 +15,7 @@ export default observer( function BuyerList() {
         deleteBuyer(id);
     }    
 
-    if (buyerStore.loadingInitial) return <LoadingComponent content='Loaading app' />
+    if (buyerStore.loadingInitial) return <LoadingComponent content='Loaading ...' />
     return (
         <>
             <div className='div-data-table-header'>

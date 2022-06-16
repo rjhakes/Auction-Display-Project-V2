@@ -16,7 +16,7 @@ export default observer( function ExhibitorDashboard() {
         exhibitorStore.loadExhibitors();
     }, [exhibitorStore])
 
-    if (exhibitorStore.loadingInitial) return <LoadingComponent content='Loaading app' />
+    if (exhibitorStore.loadingInitial) return <LoadingComponent content='Loaading ...' />
 
     const handleFileUpload = (e: any) => {
         const { files } = e.target;

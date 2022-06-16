@@ -15,7 +15,7 @@ export default observer( function TransactionList() {
         deleteTransaction(id);
     }    
 
-    if (transactionStore.loadingInitial) return <LoadingComponent content='Loaading app' />
+    if (transactionStore.loadingInitial) return <LoadingComponent content='Loaading ...' />
     return (
         <>
             <div className='div-data-table-header'>

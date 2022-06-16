@@ -1,4 +1,4 @@
-# Auction-Display-Project-V2
+m# Auction-Display-Project-V2
 
 - [ ] Configurations
 
@@ -25,30 +25,30 @@
     - [ ] sponser info?
   - [ ] Navigation bar
     - [ ] Data Management
-      - [ ] Exhibitor
-        - [ ] <List> Add New Exhibitor
-        - [ ] Delete All Exhibitors
-        - [ ] Import .csv
-        - [ ] Export .csv
-        - [ ] Table
-          - [ ] <List> edit
-          - [ ] delete
-      - [ ] Buyer
-        - [ ] <List> Add New Buyer
-        - [ ] Delete All Buyers
-        - [ ] Import .csv
-        - [ ] Export .csv
-        - [ ] Table
-          - [ ] <List> edit
-          - [ ] delete
-      - [ ] Transaciton
-        - [ ] <List> Add New Transaction
-        - [ ] Delete All Transaction
-        - [ ] Import .csv
-        - [ ] Export .csv
-        - [ ] Table
-          - [ ] <List> edit
-          - [ ] delete
+      - [x] Exhibitor
+        - [x] <List> Add New Exhibitor
+        - [x] Delete All Exhibitors
+        - [x] Import .csv
+        - [x] Export .csv
+        - [x] Table
+          - [x] <List> edit
+          - [x] delete
+      - [x] Buyer
+        - [x] <List> Add New Buyer
+        - [x] Delete All Buyers
+        - [x] Import .csv
+        - [x] Export .csv
+        - [x] Table
+          - [x] <List> edit
+          - [x] delete
+      - [x] Transaciton
+        - [x] <List> Add New Transaction
+        - [x] Delete All Transaction
+        - [x] Import .csv
+        - [x] Export .csv
+        - [x] Table
+          - [x] <List> edit
+          - [x] delete
     - [ ] GUI Transaction
       - [ ] Sale Number
       - [ ] Buyer Bidder Number

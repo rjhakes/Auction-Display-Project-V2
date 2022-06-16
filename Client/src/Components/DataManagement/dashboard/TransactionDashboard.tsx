@@ -15,7 +15,7 @@ export default observer(function TransactionDashboard() {
         transactionStore.loadTransactions();
     }, [transactionStore])
 
-    if (transactionStore.loadingInitial) return <LoadingComponent content='Loaading app' />
+    if (transactionStore.loadingInitial) return <LoadingComponent content='Loaading ...' />
 
     const handleFileUpload = (e: any) => {
         const { files } = e.target;
