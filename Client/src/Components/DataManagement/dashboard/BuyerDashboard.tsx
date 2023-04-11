@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Container } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
+// import BuyerForm from '../form/BuyerForm';
+// import BuyerList from './BuyerList';
 import BuyerForm from '../form/BuyerForm';
 import BuyerList from './BuyerList';
 
