@@ -18,6 +18,11 @@ namespace BL
             return await _repo.AddBuyerAsync(newBuyer);
         }
 
+        public async Task<List<Buyer>> AddBuyerListAsync(List<Buyer> newBuyers)
+        {
+            return await _repo.AddBuyerListAsync(newBuyers);
+        }
+
         public async Task<Buyer> DeleteBuyerAsync(Buyer buyer2BDeleted)
         {
             return await _repo.DeleteBuyerAsync(buyer2BDeleted);

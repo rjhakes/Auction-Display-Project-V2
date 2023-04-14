@@ -34,6 +34,7 @@ const Buyers = {
     list: () => requests.get<BuyerModel[]>('/Buyer'),
     details: (id: string) => requests.get<BuyerModel>(`/Buyer/${id}`),
     create: (buyer: BuyerModel) => axios.post<void>('/Buyer', buyer),
+    createList: (buyers: Array<BuyerModel>) => axios.post<void>('/Buyer/import', buyers),
     update: (buyer: BuyerModel) => axios.put<void>(`/Buyer/${buyer.id}`, buyer),
     delete: (id: string) => axios.delete<void>(`/Buyer/${id}`)
 }

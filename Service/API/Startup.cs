@@ -10,8 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+// using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using DL;
 using BL;
 
@@ -20,9 +21,13 @@ namespace API
     public class Startup
     {
         private readonly IConfiguration _config;
+        // private readonly ILogger _logger;
         public Startup(IConfiguration config)
         {
             _config = config;
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(_config)
+                .CreateLogger();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -57,6 +62,7 @@ namespace API
             services.AddScoped<ITransactionRepo, TransactionRepo>();
             services.AddScoped<ITransactionBL, TransactionBL>();
             // services.AddScoped<IMapper, Mapper>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +72,17 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+                app.UseSwaggerUI(c => 
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+                    c.RoutePrefix = "";
+                });
+                // var logger = new LoggerConfiguration()
+                //     .ReadFrom.Configuration(app)
+                //     .Enrich.FromLogContext()
+                //     .CreateLogger();
+                // app.Logging.ClearProviders();
+                // app.Logging.AddSerilog(logger);
             }
 
             // app.UseHttpsRedirection();

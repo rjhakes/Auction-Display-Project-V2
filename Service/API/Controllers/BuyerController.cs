@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,11 +17,12 @@ namespace API.Controllers
         private readonly IBuyerBL _buyerBL;
         // private readonly DataContext _context;
         // private readonly IMediator _mediator;
-        // private readonly ILogger<BuyerController> _logger;
+        private readonly ILogger<BuyerController> _logger;
         
-        public BuyerController(IBuyerBL buyerBL) //IMediator mediator)
+        public BuyerController(IBuyerBL buyerBL, ILogger<BuyerController> logger) //IMediator mediator)
         {
             _buyerBL = buyerBL;
+            _logger = logger;
             // _mediator = mediator;
         }
 
@@ -59,11 +61,31 @@ namespace API.Controllers
         {
             try
             {
+                
                 await _buyerBL.AddBuyerAsync(buyer);
                 return CreatedAtAction("AddBuyer", buyer);
             }
             catch (Exception e)
             {
+                // System.Diagnostics.Debug.WriteLine(e);
+                return StatusCode(400);
+            }
+        }
+
+        [HttpPost("import")]
+        [Consumes("application/json")]
+        public async Task<IActionResult> AddBuyerListAsync([FromBody] List<Buyer> buyers)
+        {
+            try
+            {
+                _logger.LogInformation("Importing Buyer LIst");
+                await _buyerBL.AddBuyerListAsync(buyers);
+                // _logger.Log(LogLevel.Information, "Buyers List Imported");
+                return CreatedAtAction("AddBuyer", buyers);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.ToString());
                 return StatusCode(400);
             }
         }

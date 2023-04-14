@@ -25,7 +25,7 @@ export default class BuyerStore {
     }
 
     loadBuyers = async () => {
-        this.loadingInitial = true;
+        this.setLoadingInitial(true);
         try {
             const buyers = await agent.Buyers.list();
             buyers.forEach(buyer => {
@@ -104,6 +104,22 @@ export default class BuyerStore {
         }
     } 
 
+    createBuyerList = async (buyers: Array<BuyerModel>) => {
+        this.loading = true;
+        alert('Importing CSV file may take several minutes');
+        try {
+            await agent.Buyers.createList(buyers);
+            this.loadBuyers();
+        } catch (error) {
+            console.log(error);
+            this.loadBuyers();
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+
+    }
+
     updateBuyer = async (buyer: BuyerModel) => {
         this.loading = true;
         try {
@@ -157,7 +173,7 @@ export default class BuyerStore {
     csvImport = async (e: string) => {
         let line: string[];
         let csvBuyer = e.split('\n');
-        
+        let buyerArr = new Array<BuyerModel>();
         for (let i = 1; i < csvBuyer.length; i++) {
             line = csvBuyer[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             this.selectedBuyer = {
@@ -169,37 +185,29 @@ export default class BuyerStore {
                 email: line[4],
                 logoFile: line[5],
             }
-            this.createBuyer(this.selectedBuyer);
+            buyerArr.push(this.selectedBuyer);
         }
-    }
+        // console.log(buyerArr);
+        this.createBuyerList(buyerArr);
 
-    // csvImport = async (e: FileList) => {
-    //     let line: string[];
-    //     let csvBuyer = "";
-    //     setTimeout(() => {
-    //         let csvArr = csvBuyer.split('\n');
-    //         for (let i = 1; i < csvArr.length; i++) {
-    //             line = csvArr[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-    //             line[1] = line[1].replace(/"/g, '');
-    //             this.selectedBuyer = {
-    //                 id: "",
-    //                 bidderNumber: line[0],
-    //                 name: line[1],
-    //                 contactName: line[2],
-    //                 phone: line[3],
-    //                 email: line[4],
-    //                 logoFile: line[5],
-    //             }
-    //             this.createBuyer(this.selectedBuyer);
-    //         }
-    //     }, 0);  
-    //     let reader = e[0].stream().getReader();
-    //     let decoder = new TextDecoder('utf-8');
-    //     reader?.read().then(function (result) {
-    //         csvBuyer = decoder.decode(result.value);
-    //     })
-    //     console.log("End_csvImport()");
-    // }
+        // let buyerHeader = csvBuyer.shift();
+        // this.createBuyerList(csvBuyer);
+        // this.loadBuyers();
+
+        // for (let i = 1; i < csvBuyer.length; i++) {
+        //     line = csvBuyer[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+        //     this.selectedBuyer = {
+        //         id: "",
+        //         bidderNumber: line[0],
+        //         name: line[1],
+        //         contactName: line[2],
+        //         phone: line[3],
+        //         email: line[4],
+        //         logoFile: line[5],
+        //     }
+        //     this.createBuyer(this.selectedBuyer);
+        // }
+    }
 
     csvExport = async () => {
         const csvRows = [];

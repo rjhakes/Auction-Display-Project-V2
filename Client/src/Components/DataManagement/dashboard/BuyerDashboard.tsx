@@ -81,7 +81,7 @@ export default observer( function BuyerDashboard() {
                         onClick={(e) => {
                           handleOnSubmit(e);
                         }}
-                        icon='upload' color='green'
+                        icon='upload' color='green' loading={loading}
                       /> 
                     </Segment>
                   <Segment>
