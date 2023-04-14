@@ -1,7 +1,7 @@
 export interface BuyerModel
 {
     id: string,
-    bidderNumber: string,
+    bidderNumber: number,
     name: string,
     contactName: string,
     phone: string,

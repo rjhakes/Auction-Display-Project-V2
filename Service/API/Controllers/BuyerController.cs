@@ -81,7 +81,7 @@ namespace API.Controllers
                 _logger.LogInformation("Importing Buyer LIst");
                 await _buyerBL.AddBuyerListAsync(buyers);
                 // _logger.Log(LogLevel.Information, "Buyers List Imported");
-                return CreatedAtAction("AddBuyer", buyers);
+                return CreatedAtAction("AddBuyerList", buyers);
             }
             catch (Exception e)
             {

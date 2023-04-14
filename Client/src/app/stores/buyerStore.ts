@@ -21,7 +21,8 @@ export default class BuyerStore {
     // sort
     get buyersByBidNum() {
         return Array.from(this.buyerRegistry.values()).sort((a,b) => 
-            parseInt(a.bidderNumber) - parseInt(b.bidderNumber));
+            a.bidderNumber - b.bidderNumber);
+            // parseInt(a.bidderNumber) - parseInt(b.bidderNumber));
     }
 
     loadBuyers = async () => {
@@ -107,17 +108,28 @@ export default class BuyerStore {
     createBuyerList = async (buyers: Array<BuyerModel>) => {
         this.loading = true;
         alert('Importing CSV file may take several minutes');
+        this.loadingInitial = true;
+        // this.setLoadingInitial(true);
         try {
             await agent.Buyers.createList(buyers);
+            
+            runInAction(() => {
+                this.loading = false;
+                this.loadingInitial = false;
+                // this.setLoadingInitial(false);
+            })
             this.loadBuyers();
         } catch (error) {
             console.log(error);
-            this.loadBuyers();
+            
             runInAction(() => {
                 this.loading = false;
+                this.loadingInitial = false;
+                // this.setLoadingInitial(false);
             })
+            this.loadBuyers();
         }
-
+        
     }
 
     updateBuyer = async (buyer: BuyerModel) => {
@@ -176,18 +188,22 @@ export default class BuyerStore {
         let buyerArr = new Array<BuyerModel>();
         for (let i = 1; i < csvBuyer.length; i++) {
             line = csvBuyer[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            this.selectedBuyer = {
-                id: "",
-                bidderNumber: line[0],
-                name: line[1],
-                contactName: line[2],
-                phone: line[3],
-                email: line[4],
-                logoFile: line[5],
-            }
-            buyerArr.push(this.selectedBuyer);
+            if (line[0] == '') {
+                
+            } else {
+                this.selectedBuyer = {
+                    id: uuid(),
+                    bidderNumber: parseInt(line[0]),
+                    // name: line[1].replace('"', ''),
+                    name: line[1].replace(/["]+/g, ''),
+                    contactName: line[2],
+                    phone: line[3],
+                    email: line[4],
+                    logoFile: line[5],
+                }
+                buyerArr.push(this.selectedBuyer);
+            }       
         }
-        // console.log(buyerArr);
         this.createBuyerList(buyerArr);
 
         // let buyerHeader = csvBuyer.shift();

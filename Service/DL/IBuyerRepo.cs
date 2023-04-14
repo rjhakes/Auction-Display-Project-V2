@@ -8,7 +8,8 @@ namespace DL
     public interface IBuyerRepo
     {
         Task<Buyer> AddBuyerAsync(Buyer newBuyer);
-        Task<List<Buyer>> AddBuyerListAsync(List<Buyer> newBuyers);
+        // Task<List<Buyer>> AddBuyerListAsync(List<Buyer> newBuyers);
+        Task<TimeSpan> AddBuyerListAsync(List<Buyer> newBuyers);
         Task<Buyer> DeleteBuyerAsync(Buyer buyer2BDeleted);
         Task<Buyer> GetBuyerByIdAsync(Guid id);
         Task<Buyer> GetBuyerByBNumAsync(int bNum);

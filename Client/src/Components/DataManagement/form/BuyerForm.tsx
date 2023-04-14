@@ -9,7 +9,7 @@ export default observer( function BuyerForm() {
 
     const initialState = selectedBuyer ?? {
         id: '',
-        bidderNumber: '',
+        bidderNumber: 0,
         name: '',
         contactName: '',
         phone: '',
@@ -21,7 +21,7 @@ export default observer( function BuyerForm() {
 
 
     function handleSubmit() {
-        if(buyer.bidderNumber === '' || buyer.name === '' || buyer.contactName === '' || buyer.phone === '' || buyer.email === '') {
+        if(buyer.bidderNumber === 0 || buyer.name === '' || buyer.contactName === '' || buyer.phone === '' || buyer.email === '') {
             alert("Complete all required fields");
         }
         else if(!buyer.email.match( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {

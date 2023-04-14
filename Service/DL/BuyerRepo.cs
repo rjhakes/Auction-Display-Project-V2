@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
+using EFCore.BulkExtensions;
 using Models;
 
 namespace DL
@@ -12,6 +13,9 @@ namespace DL
     public class BuyerRepo : IBuyerRepo
     {
         private readonly DataContext _context;
+        private DateTime Start;
+        private TimeSpan TimeSpan;
+
         public BuyerRepo(DataContext context)
         {
             _context = context;
@@ -23,40 +27,19 @@ namespace DL
             return newBuyer;
         }
 
-        public async Task<List<Buyer>> AddBuyerListAsync(List<Buyer> newBuyers)
+        // public async Task<List<Buyer>> AddBuyerListAsync(List<Buyer> newBuyers)
+        public async Task<TimeSpan> AddBuyerListAsync(List<Buyer> newBuyers)
         {
-            // Regex csvSplit = new Regex("(?:^|,)(\"(?:[^\"])*\"|[^,]*)");
-            // Regex csvSplit = new Regex("/(\".*?\"|[^\",\\s]+)(?=\\s*,|\\s*$)/g", RegexOptions.Compiled);
-            // var arr = str.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-
-            foreach(Buyer b in newBuyers)
-            {
-                // string[] s = Regex.Split(b, csvSplit);
-                // string[] s = csvSplit.Split(b);
-                // string[] s = b.Split(',');
-                // List<string> s = new List<string>();
-                // string curr = null;
-                // foreach (Match match in csvSplit.Matches(b))
-                // {
-                //     curr = match.Value;
-                //     if (0 == curr.Length)
-                //     {
-                //         s.Add("");
-                //     }
-                //     s.Add(curr.TrimStart(','));
-                // }
-
-                // Buyer buyer = new Buyer();
-                // buyer.BidderNumber = Int32.Parse(s[0]);
-                // buyer.Name = s[1];
-                // buyer.ContactName = s[2];
-                // buyer.Phone = s[3];
-                // buyer.Email = s[4];
-                // buyer.LogoFile = s[5];
-                await _context.Buyers.AddAsync(b);
-                await _context.SaveChangesAsync();
-            }
-            return newBuyers;
+            Start = DateTime.Now;
+            await _context.BulkInsertAsync(newBuyers);
+            // foreach(Buyer b in newBuyers)
+            // {
+            //     await _context.Buyers.AddAsync(b);
+            // }
+            await _context.SaveChangesAsync();
+            TimeSpan = DateTime.Now - Start;
+            // return newBuyers;
+            return TimeSpan;
         }
 
         public async Task<Buyer> DeleteBuyerAsync(Buyer buyer2BDeleted)
