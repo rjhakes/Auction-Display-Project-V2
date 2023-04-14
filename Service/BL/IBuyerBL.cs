@@ -14,6 +14,7 @@ namespace BL
         Task<Buyer> GetBuyerByIdAsync(Guid id);
         Task<Buyer> GetBuyerByBNumAsync(int bNum);
         Task<Buyer> DeleteBuyerAsync(Buyer buyer2BDeleted);
+        Task<TimeSpan> DeleteBuyersAllAsync();
         Task<Buyer> UpdateBuyerAsync(Buyer buyer2BUpdated);
     }
 }

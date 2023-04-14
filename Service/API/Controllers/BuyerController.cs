@@ -120,6 +120,20 @@ namespace API.Controllers
             }
         }
 
+        [HttpDelete("deleteAll")]
+        public async Task<IActionResult> DeleteBuyersAllAsync()
+        {
+            try
+            {
+                await _buyerBL.DeleteBuyersAllAsync();
+                return NoContent();
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
         // GET: api/<BuyerController>/5
         // [HttpGet("{bNum}")]
         // [Produces("application/json")]

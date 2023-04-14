@@ -13,8 +13,8 @@ namespace DL
     public class BuyerRepo : IBuyerRepo
     {
         private readonly DataContext _context;
-        private DateTime Start;
-        private TimeSpan TimeSpan;
+        private DateTime _Start;
+        private TimeSpan _TimeSpan;
 
         public BuyerRepo(DataContext context)
         {
@@ -30,16 +30,16 @@ namespace DL
         // public async Task<List<Buyer>> AddBuyerListAsync(List<Buyer> newBuyers)
         public async Task<TimeSpan> AddBuyerListAsync(List<Buyer> newBuyers)
         {
-            Start = DateTime.Now;
+            _Start = DateTime.Now;
             await _context.BulkInsertAsync(newBuyers);
             // foreach(Buyer b in newBuyers)
             // {
             //     await _context.Buyers.AddAsync(b);
             // }
-            await _context.SaveChangesAsync();
-            TimeSpan = DateTime.Now - Start;
+            // await _context.SaveChangesAsync();
+            _TimeSpan = DateTime.Now - _Start;
             // return newBuyers;
-            return TimeSpan;
+            return _TimeSpan;
         }
 
         public async Task<Buyer> DeleteBuyerAsync(Buyer buyer2BDeleted)
@@ -47,6 +47,16 @@ namespace DL
             _context.Buyers.Remove(buyer2BDeleted);
             await _context.SaveChangesAsync();
             return buyer2BDeleted;
+        }
+
+        public async Task<TimeSpan> DeleteBuyersAllAsync()
+        {
+            _Start = DateTime.Now;
+            List<Buyer> buyers = new();
+            buyers = _context.Buyers.ToList();
+            await _context.BulkDeleteAsync(buyers);
+            _TimeSpan = DateTime.Now - _Start;
+            return _TimeSpan;
         }
 
         public async Task<Buyer> GetBuyerByIdAsync(Guid id)

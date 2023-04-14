@@ -107,7 +107,6 @@ export default class BuyerStore {
 
     createBuyerList = async (buyers: Array<BuyerModel>) => {
         this.loading = true;
-        alert('Importing CSV file may take several minutes');
         this.loadingInitial = true;
         // this.setLoadingInitial(true);
         try {
@@ -169,17 +168,35 @@ export default class BuyerStore {
 
     deleteAllBuyers = async () => {
         this.loading = true;
+        this.loadingInitial = true;
         this.csvExport();
         try {
-            this.buyerRegistry.forEach(async buyer => {
-                this.deleteBuyer(buyer.id);
-            });
+            await agent.Buyers.deleteAll(); //Array.from(this.buyerRegistry.values()));
+            this.buyerRegistry = new Map<string, BuyerModel>();
+            runInAction(() => {
+                this.loading = false;
+                this.loadingInitial = false;
+            })
         } catch (error) {
             console.log(error);
             runInAction(() => {
                 this.loading = false;
+                this.loadingInitial = false;
             })
         }
+
+        // this.loading = true;
+        // this.csvExport();
+        // try {
+        //     this.buyerRegistry.forEach(async buyer => {
+        //         this.deleteBuyer(buyer.id);
+        //     });
+        // } catch (error) {
+        //     console.log(error);
+        //     runInAction(() => {
+        //         this.loading = false;
+        //     })
+        // }
     }
 
     csvImport = async (e: string) => {

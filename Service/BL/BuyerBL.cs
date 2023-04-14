@@ -29,6 +29,11 @@ namespace BL
             return await _repo.DeleteBuyerAsync(buyer2BDeleted);
         }
 
+        public async Task<TimeSpan> DeleteBuyersAllAsync()
+        {
+            return await _repo.DeleteBuyersAllAsync();
+        }
+
         public async Task<Buyer> GetBuyerByIdAsync(Guid id)
         {
             return await _repo.GetBuyerByIdAsync(id);

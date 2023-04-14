@@ -27,8 +27,7 @@ const requests = {
     get: <T> (url: string) => axios.get<T>(url).then(responseBody), 
     post: <T> (url: string, body: {}) => axios.post<T>(url, body).then(responseBody), 
     put: <T> (url: string, body: {}) => axios.put<T>(url, body).then(responseBody), 
-    del: <T> (url: string) => axios.delete<T>(url).then(responseBody), 
-}
+    del: <T> (url: string) => axios.delete<T>(url).then(responseBody), }
 
 const Buyers = {
     list: () => requests.get<BuyerModel[]>('/Buyer'),
@@ -36,7 +35,8 @@ const Buyers = {
     create: (buyer: BuyerModel) => axios.post<void>('/Buyer', buyer),
     createList: (buyers: Array<BuyerModel>) => axios.post<void>('/Buyer/import', buyers),
     update: (buyer: BuyerModel) => axios.put<void>(`/Buyer/${buyer.id}`, buyer),
-    delete: (id: string) => axios.delete<void>(`/Buyer/${id}`)
+    delete: (id: string) => axios.delete<void>(`/Buyer/${id}`),
+    deleteAll: () => axios.delete<void>('/Buyer/deleteAll'),
 }
 
 const Transactions = {
