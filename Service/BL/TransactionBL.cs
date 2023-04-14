@@ -18,9 +18,19 @@ namespace BL
             return await _repo.AddTransactionAsync(newTransaction);
         }
 
+        public async Task<TimeSpan> AddTransactionListAsync(List<Transaction> newTransactions)
+        {
+            return await _repo.AddTransactionListAsync(newTransactions);
+        }
+
         public async Task<Transaction> DeleteTransactionAsync(Transaction transaction2BDeleted)
         {
             return await _repo.DeleteTransactionAsync(transaction2BDeleted);
+        }
+
+        public async Task<TimeSpan> DeleteTransactionsAllAsync()
+        {
+            return await _repo.DeleteTransactionsAllAsync();
         }
 
         public async Task<Transaction> GetTransactionByIdAsync(Guid id)

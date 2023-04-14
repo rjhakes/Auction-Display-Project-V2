@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using EFCore.BulkExtensions;
 using Models;
 
 namespace DL
@@ -11,6 +12,9 @@ namespace DL
     public class ExhibitorRepo : IExhibitorRepo
     {
         private readonly DataContext _context;
+        private DateTime _Start;
+        private TimeSpan _TimeSpan;
+
         public ExhibitorRepo(DataContext context)
         {
             _context = context;
@@ -23,11 +27,29 @@ namespace DL
             return newExhibitor;
         }
 
+        public async Task<TimeSpan> AddExhibitorListAsync(List<Exhibitor> newExhibitors)
+        {
+            _Start = DateTime.Now;
+            await _context.BulkInsertAsync(newExhibitors);
+            _TimeSpan = DateTime.Now - _Start;
+            return _TimeSpan;
+        }
+
         public async Task<Exhibitor> DeleteExhibitorAsync(Exhibitor exhibitor2BDeleted)
         {
             _context.Exhibitors.Remove(exhibitor2BDeleted);
             await _context.SaveChangesAsync();
             return exhibitor2BDeleted;
+        }
+
+        public async Task<TimeSpan> DeleteExhibitorsAllAsync()
+        {
+            _Start = DateTime.Now;
+            List<Exhibitor> exhibitors = new();
+            exhibitors = _context.Exhibitors.ToList();
+            await _context.BulkDeleteAsync(exhibitors);
+            _TimeSpan = DateTime.Now - _Start;
+            return _TimeSpan;
         }
 
         public async Task<Exhibitor> GetExhibitorByIdAsync(Guid id)

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,14 +16,11 @@ namespace API.Controllers
     {
         private readonly ITransactionBL _transactionBL;
         private readonly ILogger<TransactionController> _logger;
-        public TransactionController(ITransactionBL transactionBL)
+        public TransactionController(ITransactionBL transactionBL, ILogger<TransactionController> logger)
         {
             _transactionBL = transactionBL;
+            _logger = logger;
         }
-        // public TransactionController(ILogger<TransactionController> logger)
-        // {
-        //     _logger = logger;
-        // }
 
         // GET: api/<TransactionController>
         [HttpGet]
@@ -57,6 +55,23 @@ namespace API.Controllers
             }
         }
 
+        [HttpPost("import")]
+        [Consumes("application/json")]
+        public async Task<IActionResult> AddTransactionListAsync([FromBody] List<Transaction> transactions)
+        {
+            try
+            {
+                _logger.LogInformation("Importing Transaction LIst");
+                await _transactionBL.AddTransactionListAsync(transactions);
+                return CreatedAtAction("AddTransactionList", transactions);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.ToString());
+                return StatusCode(400);
+            }
+        }
+
         // Put: api/<TransactionController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTransactionAsync(Guid id, [FromBody] Transaction transaction)
@@ -79,6 +94,20 @@ namespace API.Controllers
             try
             {
                 await _transactionBL.DeleteTransactionAsync(await _transactionBL.GetTransactionByIdAsync(id));
+                return NoContent();
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpDelete("deleteAll")]
+        public async Task<IActionResult> DeleteTransactionsAllAsync()
+        {
+            try
+            {
+                await _transactionBL.DeleteTransactionsAllAsync();
                 return NoContent();
             }
             catch

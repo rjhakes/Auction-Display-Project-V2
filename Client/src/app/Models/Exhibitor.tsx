@@ -1,7 +1,7 @@
 export interface ExhibitorModel
 {
     id: string,
-    saleNumber: string,
+    saleNumber: number,
     name: string,
     tag: string,
     species: string,

@@ -18,9 +18,19 @@ namespace BL
             return await _repo.AddExhibitorAsync(newExhibitor);
         }
 
+        public async Task<TimeSpan> AddExhibitorListAsync(List<Exhibitor> newExhibitors)
+        {
+            return await _repo.AddExhibitorListAsync(newExhibitors);
+        }
+
         public async Task<Exhibitor> DeleteExhibitorAsync(Exhibitor exhibitor2BDeleted)
         {
             return await _repo.DeleteExhibitorAsync(exhibitor2BDeleted);
+        }
+
+        public async Task<TimeSpan> DeleteExhibitorsAllAsync()
+        {
+            return await _repo.DeleteExhibitorsAllAsync();
         }
 
         public async Task<Exhibitor> GetExhibitorByIdAsync(Guid id)

@@ -27,18 +27,11 @@ namespace DL
             return newBuyer;
         }
 
-        // public async Task<List<Buyer>> AddBuyerListAsync(List<Buyer> newBuyers)
         public async Task<TimeSpan> AddBuyerListAsync(List<Buyer> newBuyers)
         {
             _Start = DateTime.Now;
             await _context.BulkInsertAsync(newBuyers);
-            // foreach(Buyer b in newBuyers)
-            // {
-            //     await _context.Buyers.AddAsync(b);
-            // }
-            // await _context.SaveChangesAsync();
             _TimeSpan = DateTime.Now - _Start;
-            // return newBuyers;
             return _TimeSpan;
         }
 

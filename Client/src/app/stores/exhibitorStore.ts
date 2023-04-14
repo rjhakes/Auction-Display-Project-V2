@@ -16,7 +16,7 @@ export default class ExhibitorStore {
 
     get exhibitorsBySaleNum() {
         return Array.from(this.exhibitorRegistry.values()).sort((a,b) => 
-            parseInt(a.saleNumber) - parseInt(b.saleNumber));
+            a.saleNumber - b.saleNumber);
     }
 
     loadExhibitors = async () => {
@@ -99,6 +99,28 @@ export default class ExhibitorStore {
         }
     } 
 
+    createExhibitorList = async (exhibitors: Array<ExhibitorModel>) => {
+        this.loading = true;
+        this.loadingInitial = true;
+        try {
+            await agent.Exhibitors.createList(exhibitors);
+            
+            runInAction(() => {
+                this.loading = false;
+                this.loadingInitial = false;
+            })
+            this.loadExhibitors();
+        } catch (error) {
+            console.log(error);
+            
+            runInAction(() => {
+                this.loading = false;
+                this.loadingInitial = false;
+            })
+            this.loadExhibitors();
+        }
+    }
+
     updateExhibitor = async (exhibitor: ExhibitorModel) => {
         this.loading = true;
         try {
@@ -136,47 +158,50 @@ export default class ExhibitorStore {
 
     deleteAllExhibitors = async () => {
         this.loading = true;
+        this.loadingInitial = true;
         this.csvExport();
         try {
-            this.exhibitorRegistry.forEach(async exhibitor => {
-                this.deleteExhibitor(exhibitor.id);
-            });
+            await agent.Exhibitors.deleteAll(); //Array.from(this.exhibitorRegistry.values()));
+            this.exhibitorRegistry = new Map<string, ExhibitorModel>();
+            runInAction(() => {
+                this.loading = false;
+                this.loadingInitial = false;
+            })
         } catch (error) {
             console.log(error);
             runInAction(() => {
                 this.loading = false;
+                this.loadingInitial = false;
             })
         }
     }
 
-    csvImport = async (e: FileList) => {
+    csvImport = async (e: string) => {
         let line: string[];
-        let csvBuyer = "";
-        setTimeout(() => {
-            let csvArr = csvBuyer.split('\n');
-            for (let i = 1; i < csvArr.length; i++) {
-                line = csvArr[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+        let csvExhibitor = e.split('\n');
+        let exhibitorArr = new Array<ExhibitorModel>();
+        for (let i = 1; i < csvExhibitor.length; i++) {
+            line = csvExhibitor[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            if (line[0] == '') {
+                
+            } else {
                 this.selectedExhibitor = {
-                    id: "",
-                    saleNumber: line[0],
-                    name: line[1],
+                    id: uuid(),
+                    saleNumber: parseInt(line[0]),
+                    name: line[1].replace(/["]+/g, ''),
                     tag: line[2],
                     species: line[3],
                     description: line[4],
                     checkInWeight: line[5],
-                    clubName: line[6],
-                    showClassName: line[7],
-                    placing: line[8],
-                    buyBack: line[9],
+                    clubName: line[2],
+                    showClassName: line[3],
+                    placing: line[4],
+                    buyBack: line[5],
                 }
-                this.createExhibitor(this.selectedExhibitor);
-            }
-        }, 0);  
-        let reader = e[0].stream().getReader();
-        let decoder = new TextDecoder('utf-8');
-        reader?.read().then(function (result) {
-            csvBuyer = decoder.decode(result.value);
-        })
+                exhibitorArr.push(this.selectedExhibitor);
+            }       
+        }
+        this.createExhibitorList(exhibitorArr);
     }
 
     csvExport = async () => {

@@ -18,7 +18,6 @@ namespace BL
             return await _repo.AddBuyerAsync(newBuyer);
         }
 
-        // public async Task<List<Buyer>> AddBuyerListAsync(List<Buyer> newBuyers)
         public async Task<TimeSpan> AddBuyerListAsync(List<Buyer> newBuyers)
         {
             return await _repo.AddBuyerListAsync(newBuyers);

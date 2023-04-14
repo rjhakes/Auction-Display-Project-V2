@@ -43,16 +43,20 @@ const Transactions = {
     list: () => requests.get<TransactionModel[]>('/Transaction'),
     details: (id: string) => requests.get<TransactionModel>(`/Transaction/${id}`),
     create: (transaction: TransactionModel) => axios.post<void>('/Transaction', transaction),
+    createList: (transactions: Array<TransactionModel>) => axios.post<void>('/Transaction/import', transactions),
     update: (transaction: TransactionModel) => axios.put<void>(`/Transaction/${transaction.id}`, transaction),
-    delete: (id: string) => axios.delete<void>(`/Transaction/${id}`)
+    delete: (id: string) => axios.delete<void>(`/Transaction/${id}`),
+    deleteAll: () => axios.delete<void>('/Transaction/deleteAll'),
 }
 
 const Exhibitors = {
     list: () => requests.get<ExhibitorModel[]>('/Exhibitor'),
     details: (id: string) => requests.get<ExhibitorModel>(`/Exhibitor/${id}`),
     create: (exhibitor: ExhibitorModel) => axios.post<void>('/Exhibitor', exhibitor),
+    createList: (exhibitors: Array<ExhibitorModel>) => axios.post<void>('/Exhibitor/import', exhibitors),
     update: (exhibitor: ExhibitorModel) => axios.put<void>(`/Exhibitor/${exhibitor.id}`, exhibitor),
-    delete: (id: string) => axios.delete<void>(`/Exhibitor/${id}`)
+    delete: (id: string) => axios.delete<void>(`/Exhibitor/${id}`),
+    deleteAll: () => axios.delete<void>('/Exhibitor/deleteAll'),
 }
 
 

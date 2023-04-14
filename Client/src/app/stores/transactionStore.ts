@@ -16,7 +16,7 @@ export default class TransactionStore {
 
     get transactionsBySaleNum() {
         return Array.from(this.transactionRegistry.values()).sort((a,b) => 
-            parseInt(a.saleNumber) - parseInt(b.saleNumber));
+            a.saleNumber - b.saleNumber);
     }
 
     loadTransactions = async () => {
@@ -99,6 +99,29 @@ export default class TransactionStore {
         }
     } 
 
+    createTransactionList = async (transactions: Array<TransactionModel>) => {
+        this.loading = true;
+        this.loadingInitial = true;
+        try {
+            await agent.Transactions.createList(transactions);
+            
+            runInAction(() => {
+                this.loading = false;
+                this.loadingInitial = false;
+            })
+            this.loadTransactions();
+        } catch (error) {
+            console.log(error);
+            
+            runInAction(() => {
+                this.loading = false;
+                this.loadingInitial = false;
+            })
+            this.loadTransactions();
+        }
+        
+    }
+
     updateTransaction = async (transaction: TransactionModel) => {
         this.loading = true;
         try {
@@ -136,41 +159,44 @@ export default class TransactionStore {
 
     deleteAllTransactions = async () => {
         this.loading = true;
+        this.loadingInitial = true;
         this.csvExport();
         try {
-            this.transactionRegistry.forEach(async transaction => {
-                this.deleteTransaction(transaction.id);
-            });
+            await agent.Transactions.deleteAll(); //Array.from(this.transactionRegistry.values()));
+            this.transactionRegistry = new Map<string, TransactionModel>();
+            runInAction(() => {
+                this.loading = false;
+                this.loadingInitial = false;
+            })
         } catch (error) {
             console.log(error);
             runInAction(() => {
                 this.loading = false;
+                this.loadingInitial = false;
             })
         }
     }
 
-    csvImport = async (e: FileList) => {
+    csvImport = async (e: string) => {
         let line: string[];
-        let csvBuyer = "";
-        setTimeout(() => {
-            let csvArr = csvBuyer.split('\n');
-            for (let i = 1; i < csvArr.length; i++) {
-                line = csvArr[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                this.selectedTransaction = {
-                    id: "",
-                    saleNumber: line[0],
-                    bidderNumber: line[1],
-                    purchaseAmount: line[2],
-                    processor: line[3]
-                }
-                this.createTransaction(this.selectedTransaction);
+        let csvTransaction = e.split('\n');
+        let transactionArr = new Array<TransactionModel>();
+        for (let i = 1; i < csvTransaction.length; i++) {
+            line = csvTransaction[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            if (line[0] == '') {
+                
+            } else {
+            this.selectedTransaction = {
+                id: uuid(),
+                saleNumber: parseInt(line[0]),
+                bidderNumber: parseInt(line[1]),
+                purchaseAmount: line[2],
+                processor: line[3],
             }
-        }, 0);  
-        let reader = e[0].stream().getReader();
-        let decoder = new TextDecoder('utf-8');
-        reader?.read().then(function (result) {
-            csvBuyer = decoder.decode(result.value);
-        })
+            transactionArr.push(this.selectedTransaction);
+            }       
+        }
+        this.createTransactionList(transactionArr);
     }
 
     csvExport = async () => {

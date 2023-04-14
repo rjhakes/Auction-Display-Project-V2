@@ -9,7 +9,7 @@ export default observer( function ExhibitorForm() {
 
     const initialState = selectedExhibitor ?? {
         id: '',
-        saleNumber: '',
+        saleNumber: 0,
         name: '',
         tag: '',
         species: '',

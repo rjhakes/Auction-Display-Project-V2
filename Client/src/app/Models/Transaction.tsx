@@ -1,8 +1,8 @@
 export interface TransactionModel
 {
     id: string,
-    saleNumber: string,
-    bidderNumber: string,
+    saleNumber: number,
+    bidderNumber: number,
     purchaseAmount: string,
     processor: string,
 }

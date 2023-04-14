@@ -9,8 +9,8 @@ export default observer( function TransactionForm() {
 
     const initialState = selectedTransaction ?? {
         id: '',
-        saleNumber: '',
-        bidderNumber: '',
+        saleNumber: 0,
+        bidderNumber: 0,
         purchaseAmount: '',
         processor: '',
         action: '',

@@ -15,14 +15,11 @@ namespace API.Controllers
     {
         private readonly IExhibitorBL _exhibitorBL;
         private readonly ILogger<ExhibitorController> _logger;
-        public ExhibitorController(IExhibitorBL exhibitorBL)
+        public ExhibitorController(IExhibitorBL exhibitorBL, ILogger<ExhibitorController> logger)
         {
             _exhibitorBL = exhibitorBL;
+            _logger = logger;
         }
-        // public ExhibitorController(ILogger<ExhibitorController> logger)
-        // {
-        //     _logger = logger;
-        // }
 
         // GET: api/<ExhibitorController>
         [HttpGet]
@@ -59,6 +56,23 @@ namespace API.Controllers
             }
         }
 
+        [HttpPost("import")]
+        [Consumes("application/json")]
+        public async Task<IActionResult> AddExhibitorListAsync([FromBody] List<Exhibitor> exhibitors)
+        {
+            try
+            {
+                _logger.LogInformation("Importing Exhibitor LIst");
+                await _exhibitorBL.AddExhibitorListAsync(exhibitors);
+                return CreatedAtAction("AddExhibitorList", exhibitors);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.ToString());
+                return StatusCode(400);
+            }
+        }
+
         // Put: api/<ExhibitorController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateExhibitorAsync(Guid id, [FromBody] Exhibitor exhibitor)
@@ -81,6 +95,20 @@ namespace API.Controllers
             try
             {
                 await _exhibitorBL.DeleteExhibitorAsync(await _exhibitorBL.GetExhibitorByIdAsync(id));
+                return NoContent();
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpDelete("deleteAll")]
+        public async Task<IActionResult> DeleteExhibitorsAllAsync()
+        {
+            try
+            {
+                await _exhibitorBL.DeleteExhibitorsAllAsync();
                 return NoContent();
             }
             catch

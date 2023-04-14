@@ -108,14 +108,12 @@ export default class BuyerStore {
     createBuyerList = async (buyers: Array<BuyerModel>) => {
         this.loading = true;
         this.loadingInitial = true;
-        // this.setLoadingInitial(true);
         try {
             await agent.Buyers.createList(buyers);
             
             runInAction(() => {
                 this.loading = false;
                 this.loadingInitial = false;
-                // this.setLoadingInitial(false);
             })
             this.loadBuyers();
         } catch (error) {
@@ -124,11 +122,9 @@ export default class BuyerStore {
             runInAction(() => {
                 this.loading = false;
                 this.loadingInitial = false;
-                // this.setLoadingInitial(false);
             })
             this.loadBuyers();
         }
-        
     }
 
     updateBuyer = async (buyer: BuyerModel) => {
@@ -184,19 +180,6 @@ export default class BuyerStore {
                 this.loadingInitial = false;
             })
         }
-
-        // this.loading = true;
-        // this.csvExport();
-        // try {
-        //     this.buyerRegistry.forEach(async buyer => {
-        //         this.deleteBuyer(buyer.id);
-        //     });
-        // } catch (error) {
-        //     console.log(error);
-        //     runInAction(() => {
-        //         this.loading = false;
-        //     })
-        // }
     }
 
     csvImport = async (e: string) => {
@@ -211,7 +194,6 @@ export default class BuyerStore {
                 this.selectedBuyer = {
                     id: uuid(),
                     bidderNumber: parseInt(line[0]),
-                    // name: line[1].replace('"', ''),
                     name: line[1].replace(/["]+/g, ''),
                     contactName: line[2],
                     phone: line[3],
@@ -222,24 +204,6 @@ export default class BuyerStore {
             }       
         }
         this.createBuyerList(buyerArr);
-
-        // let buyerHeader = csvBuyer.shift();
-        // this.createBuyerList(csvBuyer);
-        // this.loadBuyers();
-
-        // for (let i = 1; i < csvBuyer.length; i++) {
-        //     line = csvBuyer[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-        //     this.selectedBuyer = {
-        //         id: "",
-        //         bidderNumber: line[0],
-        //         name: line[1],
-        //         contactName: line[2],
-        //         phone: line[3],
-        //         email: line[4],
-        //         logoFile: line[5],
-        //     }
-        //     this.createBuyer(this.selectedBuyer);
-        // }
     }
 
     csvExport = async () => {

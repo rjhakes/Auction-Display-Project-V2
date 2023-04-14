@@ -30,10 +30,6 @@ namespace API.Controllers
         // {
         //     _context = context;
         // }
-        // public BuyerController(ILogger<BuyerController> logger)
-        // {
-        //     _logger = logger;
-        // }
 
         // GET: api/<BuyerController>
         [HttpGet]
@@ -80,7 +76,6 @@ namespace API.Controllers
             {
                 _logger.LogInformation("Importing Buyer LIst");
                 await _buyerBL.AddBuyerListAsync(buyers);
-                // _logger.Log(LogLevel.Information, "Buyers List Imported");
                 return CreatedAtAction("AddBuyerList", buyers);
             }
             catch (Exception e)
