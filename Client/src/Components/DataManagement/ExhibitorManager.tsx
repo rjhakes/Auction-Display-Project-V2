@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header } from 'semantic-ui-react';
+import { Container, Grid, Header, Segment } from 'semantic-ui-react';
 import ExhibitorDashboard from './dashboard/ExhibitorDashboard';
 import { observer } from 'mobx-react-lite';
 import NavData from './NavData';
@@ -7,13 +7,21 @@ import NavData from './NavData';
 function Exhibitor() {
     return (
         <>
-            <div className="navData">
-                <NavData/>
-            </div>
-            <div className='data-manager'>
-                <Header className='header-data' as='h2' icon='users' content='Exhibitors'  />
-                <ExhibitorDashboard/>
-            </div>
+            <Container style={{height:"90%", marginTop: '2em', }}>
+                <Grid columns={2} centered stackable style={{height: '80vh'}} >
+                    <Grid.Row style={{height: '100%'}}>
+                        <Grid.Column stretched width={3} style={{height: '20em'}}>
+                            <Header className='header-data' as='h2' icon='users' content='Exhibitors'  />
+                            <Segment><NavData/></Segment>
+                        </Grid.Column>
+                        <Grid.Column stretched width={13} style={{height: '62em'}}>
+                            <Segment className='data-manager'>
+                                <ExhibitorDashboard/>
+                            </Segment>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Container>     
         </>        
     );
 }

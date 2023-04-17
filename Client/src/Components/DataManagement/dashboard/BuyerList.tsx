@@ -34,7 +34,7 @@ export default observer( function BuyerList() {
                 </Table>
             </div>
             <div className='div-data-table-body'>
-                <Table inverted fixed striped stackable className='data-table-body'>
+                <Table inverted striped stackable className='data-table-body'>
                     <TableBody className='table-body'>
                         {buyersByBidNum.map(buyer => (
                             <TableRow key={buyer.id}>

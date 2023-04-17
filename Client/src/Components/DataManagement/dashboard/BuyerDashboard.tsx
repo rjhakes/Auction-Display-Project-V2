@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Container, Input, Form, Segment } from 'semantic-ui-react';
+import { Button, Container, Input, Form, Segment, Grid } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import BuyerForm from '../form/BuyerForm';
@@ -11,10 +11,7 @@ export default observer( function BuyerDashboard() {
     const {editMode, openForm, deleteAllBuyers, loading, csvImport, csvExport} = buyerStore;
     const [file, setFile] = useState();
     const fileReader = new FileReader();
-    const fileInputRef = React.createRef<any>();
     
-    // const inputFile = useRef<HTMLInputElement | null>(null);
-
     useEffect(() => {
         buyerStore.loadBuyers();
     }, [buyerStore])
@@ -49,47 +46,48 @@ export default observer( function BuyerDashboard() {
         handleOnSubmit(e);
       }
 
-    // const fileSelectBuyers = () => {
-    //     inputFile.current?.click();
-    // }
-
     return (
         <>
-            <Container className='container-data-buttons' fixed='top' style={{marginBottom: '1em'}}>
-              <Segment.Group horizontal>
-                <Segment>
-                  <Button onClick={() => openForm()} positive content='Add Buyer'/>
-                  <Button
-                      onClick={() => { 
-                      if (window.confirm('Are you sure you want to DELETE ALL BUYERS?\nA csv file will download to preserve the data.')) 
-                      deleteAllBuyers()
-                      }} 
-                      loading={loading} negative content='Delete All Buyers'/>
-                </Segment>
-                <Segment></Segment>
-                <Segment.Group horizontal>
-                  <Segment>
-                      <Input 
-                        id='csvFileInput'
-                        iconPosition='left'
-                        icon='file'
-                        ref={file} onChange={handleOnChange} 
-                        type='file' accept='.csv' 
-                        inverted
-                      />
-                    <Button
-                        onClick={(e) => {
-                          handleOnSubmit(e);
-                        }}
-                        icon='upload' color='green' loading={loading}
-                      /> 
-                    </Segment>
-                  <Segment>
-                    <Button onClick={csvExport} floated='right' color='blue' content='Export Buyers'/>
-                  </Segment>
-                </Segment.Group>
-              </Segment.Group>
-            </Container>
+        {/* <Container> */}
+            <Grid columns={2} centered style={{width: '100%'}}>
+                <Grid.Row>
+                    <Grid.Column width={4} style={{marginTop: '2em', marginLeft: '2em'}}>
+                        {/* <Segment.Group horizontal> */}
+                          <Button onClick={() => openForm()} positive content='Add'/>
+                          <Button
+                              onClick={() => { 
+                              if (window.confirm('Are you sure you want to DELETE ALL BUYERS?\nA csv file will download to preserve the data.')) 
+                              deleteAllBuyers()
+                              }} 
+                              loading={loading} negative content='Delete All'/>
+                        {/* </Segment.Group> */}
+                    </Grid.Column>
+                    <Grid.Column floated='right'>
+                        <Segment.Group horizontal>
+                          <Segment>
+                              <Input 
+                                id='csvFileInput'
+                                iconPosition='left'
+                                icon='file'
+                                ref={file} onChange={handleOnChange} 
+                                type='file' accept='.csv' 
+                                inverted
+                              />
+                            <Button
+                                onClick={(e) => {
+                                  handleOnSubmit(e);
+                                }}
+                                icon='upload' color='green' loading={loading}
+                              /> 
+                            </Segment>
+                          <Segment>
+                            <Button onClick={csvExport} floated='right' color='blue' content='Export'/>
+                          </Segment>
+                        </Segment.Group>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
+        {/* </Container>  */}
             <Container className='add-form create-form'>
                 {editMode &&
                 <BuyerForm />}

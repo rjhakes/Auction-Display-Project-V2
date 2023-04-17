@@ -37,7 +37,7 @@ export default observer( function ExhibitorList() {
                     </TableHeader>
                 </Table>
             </div>
-            <div className='div-data-table-body'>
+            <div className='div-exh-data-table-body'>
                 <Table inverted fixed striped stackable className='data-table-body'>
                     <TableBody className='table-body'>
                         {exhibitorsBySaleNum.map(exhibitor => (
