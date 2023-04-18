@@ -1,11 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
-// import { CSVReader } from "react-papaparse";
-import { default as Papa } from "react-papaparse";
 import agent from "../api/agent";
 import { BuyerModel } from "../models/Buyer";
 import {v4 as uuid} from 'uuid';
-import { ChangeEvent } from "react";
-// import sleep from '../api/sleep.js';
 
 export default class BuyerStore {
     buyerRegistry = new Map<string, BuyerModel>();

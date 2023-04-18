@@ -4,8 +4,8 @@ m# Auction-Display-Project-V2
 
 ## Client
 ### Setup
-* Install node v14.16
-* Install npm v6.14
+* Install node v18.16.0
+* Install npm v9.5.1
 * cd ~/.../Auction-Display-Project-V2/Client
 * npm install
 ### Run
