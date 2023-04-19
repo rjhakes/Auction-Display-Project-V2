@@ -5,18 +5,15 @@ import './index.css';
 import App from './app/App';
 import reportWebVitals from './reportWebVitals';
 import { store, StoreContext } from './app/stores/store';
-import { theme, ThemeContext } from './app/theme/theme';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <StoreContext.Provider value={store}>
-    <ThemeContext.Provider value={theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ThemeContext.Provider>
   </StoreContext.Provider>
 );
 

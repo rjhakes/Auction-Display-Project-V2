@@ -1,8 +1,9 @@
 body {
-  background-color: #EAEAEA !important;
+  /* background-color: #EAEAEA !important;
+  background-color: #0c101b !important;
   /* background-color: var(--bg-color);
-  color: var(--text-color); */
-  height: 100%;
+  color: var(--text-color); 
+  height: 100%; */
 }
 
 .app-container {
@@ -85,7 +86,7 @@ body {
   position: absolute;
   left: 0;
   width: 50%;
-  background-color: #EAEAEA !important;
+  /* background-color: #EAEAEA !important; */
   padding-left: 1em;
   padding-right: 1em;
 }
@@ -94,7 +95,7 @@ body {
   position: absolute;
   right: 0;
   width: 50%;
-  background-color: #EAEAEA !important;
+  /* background-color: #EAEAEA !important; */
   padding-left: 1em;
   padding-right: 1em;
 }

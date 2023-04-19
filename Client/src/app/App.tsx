@@ -4,7 +4,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import './layout/styles.css';
 import Topbar from '../scenes/global/Topbar';
 import Sidebar from '../scenes/global/Sidebar';
-import { useTheme } from './theme/theme';
+import { useTheme, theme as themex, ThemeContext } from './theme/theme';
+import { observer } from 'mobx-react-lite';
 // import NavBar from './layout/NavBar';
 // import HomePage from '../../components/home/HomePage';
 // import BuyerManager from '../../components/dataManagement/BuyerManager';
@@ -17,17 +18,13 @@ import { useTheme } from './theme/theme';
 // import AddonGUI from '../../components/addonGUI/AddonGUI';
 // import AddonDisplay from '../../components/addonDisplay/AddonDisplay';
 
-function App() {
-  // const [isSidebar, setIsSidebar] = useState(true);
-  // const [theme, colorMode] = useMode();
-  // const [mode, setMode] = useState("dark");
-  const {themer} = useTheme();
-  const {theme} = themer;
-  
-  // let partialTheme: Partial<Theme> | Context = theme
+export default observer(function App() {
+  const {themer} = useTheme();  
+  const {theme} = themer; 
 
   return (
     <>
+    <ThemeContext.Provider value={themex}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
@@ -37,8 +34,8 @@ function App() {
             </main>
         </div>
       </ThemeProvider>
-    
-      
+    </ThemeContext.Provider>
+
       
     {/* </ThemeProvider> */}
     
@@ -96,7 +93,5 @@ function App() {
     </Grid>       */}
     </>
   );
-}
-
-export default App;
+})
 

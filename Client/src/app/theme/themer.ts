@@ -3,17 +3,15 @@
 // define themes
 
 import { makeAutoObservable, runInAction } from "mobx";
-import { ITheme } from "../models/Theme";
 import { Color } from "../models/themeColors"
-import { Theme, Palette, CommonColors, PaletteMode, PaletteColor, ThemeOptions, useTheme } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Theme, PaletteMode } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import { useMemo, useState } from "react";
 
 export default class Themer {
   mode: PaletteMode = 'dark';
   tempPaletteMode: PaletteMode | undefined = undefined;
   theme: Theme;
-
 
   constructor() {
     makeAutoObservable(this)
@@ -29,12 +27,13 @@ export default class Themer {
   }
 
   toggleColorMode = () => {
-    console.log(this.mode);
-    console.log(this.theme);
+    // console.log(this.mode);
+    // console.log(this.theme);
     this.setMode(this.mode === 'light' ? 'dark' : 'light');
     this.theme = this.setTheme();
-    console.log(this.mode);
-    console.log(this.theme);
+    return this.theme;
+    // console.log(this.mode);
+    // console.log(this.theme);
   }
 
   // getCurrentTheme = () => {
@@ -232,7 +231,7 @@ export default class Themer {
   };
 
   useMode = () => {
-    // const [mode, toggleColorMode] = useState("dark");
+    const [mode, toggleColorMode] = useState("dark");
 
     const colorMode = useMemo(
       () => ({
@@ -382,8 +381,11 @@ export default class Themer {
   //   },
   // })
 
+  getTheme = () => {
+    return this.theme;
+  }
+
   setTheme = () => {
-    // this.theme = createTheme({
     return createTheme({
       palette: {
         mode: this.mode,
@@ -417,7 +419,8 @@ export default class Themer {
         },
         background: {
           default: Color.PRIMARY100,
-        }}
+        }
+      }
     )},
     typography: {
       fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
