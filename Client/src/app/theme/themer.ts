@@ -12,88 +12,12 @@ import { useMemo, useState } from "react";
 export default class Themer {
   mode: PaletteMode = 'dark';
   tempPaletteMode: PaletteMode | undefined = undefined;
-  themes = new Map<string, ITheme>();
-  darkTheme: ITheme = {
-    palette: {
-      mode: 'dark',
-      primary: {main: Color.PRIMARY500},
-      secondary: {main: Color.GREEN500},
-      neutral: {dark: Color.GREY700, main: Color.GREY500, light: Color.GREY100},
-      background: {default: Color.PRIMARY500},
-    },
-    typography: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 12,
-      h1: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 40,
-      },
-      h2: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 32,
-      },
-      h3: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 24,
-      },
-      h4: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 20,
-      },
-      h5: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 16,
-      },
-      h6: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 14,
-      },
-      },
-    };
-  lightTheme: ITheme = {
-    palette: {
-      mode: 'light',
-      primary: {main: Color.PRIMARY100},
-      secondary: {main: Color.GREEN500},
-      neutral: {dark: Color.GREY100, main: Color.GREY500, light: Color.GREY700},
-      background: {default: Color.PRIMARY500},
-    },
-    typography: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 12,
-      h1: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 40,
-      },
-      h2: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 32,
-      },
-      h3: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 24,
-      },
-      h4: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 20,
-      },
-      h5: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 16,
-      },
-      h6: {
-          fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-          fontSize: 14,
-      },
-      },
-    };
-  currentTheme: ITheme | undefined = undefined;
+  theme: Theme;
+
 
   constructor() {
     makeAutoObservable(this)
-    this.themes.set('dark', this.darkTheme);
-    this.themes.set('light', this.lightTheme);
-    this.currentTheme = this.getCurrentTheme();
+    this.theme = this.setTheme();
   }
 
   getMode = async () => {
@@ -105,13 +29,17 @@ export default class Themer {
   }
 
   toggleColorMode = () => {
+    console.log(this.mode);
+    console.log(this.theme);
     this.setMode(this.mode === 'light' ? 'dark' : 'light');
-    this.setTheme();
+    this.theme = this.setTheme();
+    console.log(this.mode);
+    console.log(this.theme);
   }
 
-  getCurrentTheme = () => {
-    return this.themes.get(this.mode);
-  }
+  // getCurrentTheme = () => {
+  //   return this.themes.get(this.mode);
+  // }
 
   tokens = (mode: any) => ({
     ...(mode === "dark"
@@ -386,82 +314,83 @@ export default class Themer {
     return [theme, colorMode];
   }
 
-  theme = createTheme({
-    palette: {
-      mode: this.mode,
-      ...(this.mode === 'dark'
-      ? {
-      primary: {
-        main: Color.PRIMARY500,
-      },
-      secondary: {
-        main: Color.GREEN500,
-      },
-      neutral: {
-        dark: Color.GREY700,
-        main: Color.GREY500,
-        light: Color.GREY100,
-      },
-      background: {
-        default: Color.PRIMARY500,
-      }
-    } : {
-      primary: {
-        main: Color.PRIMARY100,
-      },
-      secondary: {
-        main: Color.GREEN500,
-      },
-      neutral: {
-        dark: Color.GREY700,
-        main: Color.GREY500,
-        light: Color.GREY100,
-      },
-      background: {
-        default: Color.PRIMARY100,
-      }}
-  )},
-  typography: {
-    fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-    fontSize: 12,
-    h1: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 40,
-    },
-    h2: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 32,
-    },
-    h3: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 24,
-    },
-    h4: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 20,
-    },
-    h5: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 16,
-    },
-    h6: {
-      fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-      fontSize: 14,
-    },
-    },
-    shape: {
-        borderRadius: 15,
-    },
-  })
+  // theme = createTheme({
+  //   palette: {
+  //     mode: this.mode,
+  //     ...(this.mode === 'dark'
+  //     ? {
+  //     primary: {
+  //       main: Color.PRIMARY500,
+  //     },
+  //     secondary: {
+  //       main: Color.GREEN500,
+  //     },
+  //     neutral: {
+  //       dark: Color.GREY700,
+  //       main: Color.GREY500,
+  //       light: Color.GREY100,
+  //     },
+  //     background: {
+  //       default: Color.PRIMARY500,
+  //     }
+  //   } : {
+  //     primary: {
+  //       main: Color.PRIMARY100,
+  //     },
+  //     secondary: {
+  //       main: Color.GREEN500,
+  //     },
+  //     neutral: {
+  //       dark: Color.GREY700,
+  //       main: Color.GREY500,
+  //       light: Color.GREY100,
+  //     },
+  //     background: {
+  //       default: Color.PRIMARY100,
+  //     }}
+  // )},
+  // typography: {
+  //   fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+  //   fontSize: 12,
+  //   h1: {
+  //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+  //     fontSize: 40,
+  //   },
+  //   h2: {
+  //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+  //     fontSize: 32,
+  //   },
+  //   h3: {
+  //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+  //     fontSize: 24,
+  //   },
+  //   h4: {
+  //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+  //     fontSize: 20,
+  //   },
+  //   h5: {
+  //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+  //     fontSize: 16,
+  //   },
+  //   h6: {
+  //     fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
+  //     fontSize: 14,
+  //   },
+  //   },
+  //   shape: {
+  //       borderRadius: 15,
+  //   },
+  // })
 
   setTheme = () => {
-    this.theme = createTheme({
+    // this.theme = createTheme({
+    return createTheme({
       palette: {
         mode: this.mode,
         ...(this.mode === 'dark'
         ? {
         primary: {
-          main: Color.PRIMARY500,
+          main: Color.PRIMARY100,
         },
         secondary: {
           main: Color.GREEN500,
@@ -476,7 +405,7 @@ export default class Themer {
         }
       } : {
         primary: {
-          main: Color.PRIMARY100,
+          main: Color.PRIMARY500,
         },
         secondary: {
           main: Color.GREEN500,
