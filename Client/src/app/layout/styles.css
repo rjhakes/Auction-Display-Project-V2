@@ -1,5 +1,7 @@
 body {
   background-color: #EAEAEA !important;
+  /* background-color: var(--bg-color);
+  color: var(--text-color); */
   height: 100%;
 }
 
@@ -99,4 +101,75 @@ body {
 
 @media screen and (max-height: 450px) {
   .navData {padding-top: 15px}
+}
+
+.theme-btn {
+  width: 3em;
+  height: 3em;
+  padding: 0.5em;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  }
+  .theme-btn img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  }
+
+  /* :root,
+    :root.light{
+      --primary: #040509;
+      --secondary: #4cceac;
+      --neutral-dark: #141414;
+      --netural-main: #666666;
+      --neutral-light: #a3a3a3;
+      --background: #fcfcfc;
+    }
+    :root.dark {
+      --primary: #fcfcfc;
+      --secondary: #4cceac;
+      --neutral-dark: #141414;
+      --netural-main: #666666;
+      --neutral-light: #a3a3a3;
+      --background: #040509;
+    } */
+
+.light-primary {
+  color: var(--primary);
+}
+.light-secondary {
+  
+}
+.light-neutral-dark {
+  
+}
+.light-neutral-main {
+  
+}
+.light-neutral-light {
+  
+}
+.light-background {
+  
+}
+
+.dark-primary {
+
+}
+.dark-secondary {
+  
+}
+.dark-neutral-dark {
+  
+}
+.dark-neutral-main {
+  
+}
+.dark-neutral-light {
+  
+}
+.dark-background {
+  
 }

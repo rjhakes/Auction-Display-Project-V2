@@ -1,12 +1,10 @@
 import React, { Fragment, useMemo, useState } from 'react';
-// import { Container, Grid } from 'semantic-ui-react';
 import { Route, Routes } from 'react-router-dom';
-import { Theme, ThemeProvider, createTheme } from "@mui/material";
-import { ColorModeContext, themeSettings, useMode } from "./theme/themer";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import './layout/styles.css';
 import Topbar from '../scenes/global/Topbar';
 import Sidebar from '../scenes/global/Sidebar';
-import { Context } from 'vm';
+import { useTheme } from './theme/theme';
 // import NavBar from './layout/NavBar';
 // import HomePage from '../../components/home/HomePage';
 // import BuyerManager from '../../components/dataManagement/BuyerManager';
@@ -20,14 +18,31 @@ import { Context } from 'vm';
 // import AddonDisplay from '../../components/addonDisplay/AddonDisplay';
 
 function App() {
-  const [theme, colorMode] = useMode();
-  const [mode, setMode] = useState("dark");
-  const [isSidebar, setIsSidebar] = useState(true);
-
-  let partialTheme: Partial<Theme> | Context = theme
+  // const [isSidebar, setIsSidebar] = useState(true);
+  // const [theme, colorMode] = useMode();
+  // const [mode, setMode] = useState("dark");
+  const {themer} = useTheme();
+  const {theme} = themer;
+  
+  // let partialTheme: Partial<Theme> | Context = theme
 
   return (
     <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="app">
+            {/* <Sidebar /> */}
+            <main className="content">
+              <Topbar />
+            </main>
+        </div>
+      </ThemeProvider>
+    
+      
+      
+    {/* </ThemeProvider> */}
+    
+    
     {/* <ColorModeContext.Provider value={useMemo(
         () => ({
           toggleColorMode: () =>
@@ -47,7 +62,7 @@ function App() {
     </ColorModeContext.Provider> */}
 
 
-    <ColorModeContext.Provider value={colorMode}>
+    {/* <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={partialTheme} >
         <div className="app">
           Hello
@@ -57,7 +72,7 @@ function App() {
           </main>
         </div>
       </ThemeProvider>
-    </ColorModeContext.Provider>
+    </ColorModeContext.Provider> */}
 
 
     {/* <Grid style={{padding: '1em'}}>

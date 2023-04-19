@@ -9,7 +9,7 @@ export enum Color {
     GREY800 = "#292929",
     GREY900 = "#141414",
 
-    PRIMARY100 = "#d0d1d5",
+    PRIMARY100 = "#fcfcfc",
     PRIMARY200 = "#a1a4ab",
     PRIMARY300 = "#727681",
     PRIMARY400 = "#1F2A40",
