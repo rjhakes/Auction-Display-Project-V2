@@ -1,17 +1,20 @@
 import React, { Fragment, useMemo, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import './layout/styles.css';
 import Topbar from '../scenes/global/Topbar';
 import Sidebar from '../scenes/global/Sidebar';
 import { useTheme, theme as themex, ThemeContext } from './theme/theme';
-import { observer } from 'mobx-react-lite';
+
 // import NavBar from './layout/NavBar';
-// import HomePage from '../../components/home/HomePage';
-// import BuyerManager from '../../components/dataManagement/BuyerManager';
+import HomePage from '../components/home/HomePage';
+import BuyerManager from '../components/dataManagement/BuyerManager';
+// import BuyerManager from '../components/dataManagement/BuyerManager';
+// import ExhibitorManager from '../components/dataManagement/ExhibitorManager';
+// import TransactionManager from '../components/dataManagement/TransactionManager';
 // import DataManagement from '../../components/dataManagement/DataManagement';
-// import ExhibitorManager from '../../components/dataManagement/ExhibitorManager';
-// import TransactionManager from '../../components/dataManagement/TransactionManager';
+
 // import TransactionGUI from '../../components/transactionGUI/TransactionGUI';
 // import LiveSaleDisplay from '../../components/liveSaleDisplay/LiveSaleDisplay';
 // import SaleScrollDisplay from '../../components/saleScrollDisplay/SaleScrollDisplay';
@@ -21,6 +24,7 @@ import { observer } from 'mobx-react-lite';
 export default observer(function App() {
   const {themer} = useTheme();  
   const {theme} = themer; 
+  const [isSidebar, setIsSidebar] = useState(true);
 
   return (
     <>
@@ -28,9 +32,22 @@ export default observer(function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-            {/* <Sidebar /> */}
+          <Sidebar isSidebar={isSidebar}/>
             <main className="content">
               <Topbar />
+              <Routes>
+                <Route path='/' element={<HomePage />}/>
+                <Route path='/dataManagement/buyers' element={<BuyerManager />} />
+                {/* <Route path='/dataManagement' element={<DataManagement />}/> */}
+                {/* <Route path='/dataManagement/buyers' element={<BuyerManager />}/>
+                <Route path='/dataManagement/exhibitors' element={<ExhibitorManager />}/>
+                <Route path='/dataManagement/transactions' element={<TransactionManager />}/> */}
+                {/* <Route path='/transactionGUI' element={<TransactionGUI />}/>
+                <Route path='/liveSaleDisplay' element={<LiveSaleDisplay />}/>
+                <Route path='/saleScrollDisplay' element={<SaleScrollDisplay />}/>
+                <Route path='/addonGUI' element={<AddonGUI />}/>
+                <Route path='/addonDisplay' element={<AddonDisplay />}/> */}
+              </Routes>
             </main>
         </div>
       </ThemeProvider>

@@ -1,3 +1,22 @@
 index.tsx
 app.tsx
 store & agent
+
+update project readme.md
+
+remove semantic-ui-react after components are migrated
+
+add user profile
+    settings
+
+
+
+BuyerDashboard table
+    Select record (onClick, on-unselect)
+    add record 
+    edit record
+    delete record
+    delete all records
+    import csv file
+    ?export csv file?
+    pagination (direct select page)
